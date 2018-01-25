@@ -1,0 +1,73 @@
+# Schema for the configuration files of the Date Time Day module.
+
+# Date Time Day field type.
+
+field.storage_settings.datetimeday:
+  type: field.storage_settings.datetime
+  label: 'Date Time Day settings'
+  
+field.field_settings.datetimeday:
+  type: field.field_settings.datetime
+  label: 'Date Time Day settings'
+
+field.value.datetimeday:
+  type: mapping
+  label: 'Default value'
+  mapping:
+    default_date_type:
+      type: string
+      label: 'Default date type'
+    default_date:
+      type: string
+      label: 'Default date value'
+    default_start_time_type:
+      type: string
+      label: 'Default start time type'
+    default_start_time:
+      type: string
+      label: 'Default start time value'
+    default_end_time_type:
+      type: string
+      label: 'Default end time type'
+    default_end_time:
+      type: string
+      label: 'Default end time value'
+
+field.formatter.settings.datetimeday_base:
+  type: mapping
+  mapping:
+    timezone_override:
+      type: string
+      label: 'Time zone override'
+
+field.formatter.settings.datetimeday_default:
+  type: field.formatter.settings.datetimeday_base
+  label: 'Date Time Day default display format settings'
+  mapping:
+    date_separator:
+      type: label
+      label: 'Date separator'
+      translation context: 'Date separator'
+    time_separator:
+      type: label
+      label: 'Time separator'
+      translation context: 'Time separator'
+    format_type:
+      type: string
+      label: 'Date format'
+
+field.formatter.settings.datetimeday_h_i_partial_time:
+  type: field.formatter.settings.datetimeday_base
+  label: 'Date range plain display format settings'
+  mapping:
+    date_separator:
+      type: label
+      label: 'Date separator'
+      translation context: 'Date separator'
+    time_separator:
+      type: label
+      label: 'Time separator'
+      translation context: 'Time separator'
+    format_type:
+      type: string
+      label: 'Date format'
