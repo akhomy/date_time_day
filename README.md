@@ -10,7 +10,7 @@
 ## Introduction
 
 Datetime Time Day provides the ability 
-to store date (start, end) time of single day.
+to store start, end times of the single day.
 
 ## Requirements
 
