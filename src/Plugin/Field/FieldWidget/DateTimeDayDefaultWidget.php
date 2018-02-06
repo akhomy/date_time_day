@@ -11,7 +11,7 @@ use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
  *
  * @FieldWidget(
  *   id = "datetimeday_default",
- *   label = @Translation("Date Day Time with seconds"),
+ *   label = @Translation("Date Day Time"),
  *   field_types = {
  *     "datetimeday"
  *   }
@@ -27,30 +27,19 @@ class DateTimeDayDefaultWidget extends DateTimeDayWidgetBase {
     // Identify the type of date and time elements to use.
     switch ($this->getFieldSetting('datetime_type')) {
       case DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT:
-      case DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT:
         // Date field properties.
-        $value_date_format = DATETIME_DATE_STORAGE_FORMAT;
+        $value_date_format = DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT;
         $value_date_type = 'date';
         $value_time_format = '';
         $value_time_type = 'none';
-        // Time fields properties.
-        $time_date_format = '';
-        $time_date_type = 'none';
-        $time_format = DateTimeDayItem::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT;
-        $time_type = 'time';
         break;
 
       default:
         // Date field properties.
-        $value_date_format = DATETIME_DATE_STORAGE_FORMAT;
+        $value_date_format = DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT;
         $value_date_type = 'date';
         $value_time_format = '';
         $value_time_type = 'none';
-        // Time fields properties.
-        $time_date_format = '';
-        $value_date_type = 'none';
-        $time_format = DateTimeDayItem::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT;
-        $time_type = 'time';
         break;
     }
 
@@ -62,25 +51,27 @@ class DateTimeDayDefaultWidget extends DateTimeDayWidgetBase {
       '#date_time_element' => $value_time_type,
       '#date_time_callbacks' => [],
     ];
-
-    $element['start_time_value'] += [
-      '#date_date_format' => $time_date_format,
-      '#date_date_element' => $time_date_type,
-      '#date_date_callbacks' => [],
-      '#date_time_format' => $time_format,
-      '#date_time_element' => $time_type,
-      '#date_time_callbacks' => [],
+    $element['start_time_value'] = [
+      '#type' => 'textfield',
+      '#size' => 12,
+      '#attributes' => ['pattern' => '([01]?[0-9]|2[0-3]):[0-5][0-9]', 'title' => 'hh:mm'],
     ];
+    if ($items[$delta]->start_time) {
+      /** @var \Drupal\Core\Datetime\DrupalDateTime $start_date */
+      $start_time = $items[$delta]->start_time;
+      $element['start_time_value']['#default_value'] = $start_time->format(DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT);
+    }
 
-    $element['end_time_value'] += [
-      '#date_date_format' => $time_date_format,
-      '#date_date_element' => $time_date_type,
-      '#date_date_callbacks' => [],
-      '#date_time_format' => $time_format,
-      '#date_time_element' => $time_type,
-      '#date_time_callbacks' => [],
+    $element['end_time_value'] = [
+      '#type' => 'textfield',
+      '#size' => 12,
+      '#attributes' => ['pattern' => '([01]?[0-9]|2[0-3]):[0-5][0-9]', 'title' => 'hh:mm'],
     ];
-
+    if ($items[$delta]->end_time) {
+      /** @var \Drupal\Core\Datetime\DrupalDateTime $end_date */
+      $end_time = $items[$delta]->end_time;
+      $element['end_time_value']['#default_value'] = $end_time->format(DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT);
+    }
     return $element;
   }
 

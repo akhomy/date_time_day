@@ -116,15 +116,15 @@ class DateTimeDayItem extends DateTimeItem {
     $start = $timestamp - 3600;
     $end = $start + 3600;
     $type = $field_definition->getSetting('datetime_type');
-    if ($type == static::DATEDAY_TIME_TYPE_SECONDS_FORMAT) {
-      $values['value'] = gmdate(DATETIME_DATE_STORAGE_FORMAT, $timestamp);
-      $values['start_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT, $start);
-      $values['end_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT, $end);
-    }
     if ($type == static::DATEDAY_TIME_DEFAULT_TYPE_FORMAT) {
       $values['value'] = gmdate(DATETIME_DATE_STORAGE_FORMAT, $timestamp);
       $values['start_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT, $start);
       $values['end_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT, $end);
+    }
+    if ($type == static::DATEDAY_TIME_TYPE_SECONDS_FORMAT) {
+      $values['value'] = gmdate(DATETIME_DATE_STORAGE_FORMAT, $timestamp);
+      $values['start_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT, $start);
+      $values['end_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT, $end);
     }
     return $values;
   }

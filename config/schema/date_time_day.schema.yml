@@ -58,7 +58,7 @@ field.formatter.settings.datetimeday_default:
 
 field.formatter.settings.datetimeday_h_i_partial_time:
   type: field.formatter.settings.datetimeday_base
-  label: 'Date range plain display format settings'
+  label: 'Date time day plain display format settings'
   mapping:
     date_separator:
       type: label

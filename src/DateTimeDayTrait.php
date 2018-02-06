@@ -28,28 +28,13 @@ trait DateTimeDayTrait {
         $end_time = $item->end_time;
         $datetime_type = $this->getFieldSetting('datetime_type');
         $storage_format = $datetime_type === DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT ? DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT : DateTimeDayItem::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT;
-        if ($start_time->getTimestamp() !== $end_time->getTimestamp()) {
-          $elements[$delta] = [
-            'date' => ['#plain_text' => $date->format(DATETIME_DATE_STORAGE_FORMAT)],
-            'date_separator' => ['#plain_text' => ' ' . $date_separator . ' '],
-            'start_time' => ['#plain_text' => $start_time->format($storage_format)],
-            'time_separator' => ['#plain_text' => ' ' . $time_separator . ' '],
-            'end_time' => ['#plain_text' => $end_time->format($storage_format)],
-          ];
-        }
-        else {
-          $elements[$delta] = [
-            'date' => ['#plain_text' => $date->format(DATETIME_DATE_STORAGE_FORMAT)],
-            'date_separator' => ['#plain_text' => ' ' . $date_separator . ' '],
-            'time' => ['#plain_text' => $start_time->format($storage_format)],
-          ];
-          if (!empty($item->_attributes)) {
-            $elements[$delta]['#attributes'] += $item->_attributes;
-            // Unset field item attributes since they have been included in the
-            // formatter output and shouldn't be rendered in the field template.
-            unset($item->_attributes);
-          }
-        }
+        $elements[$delta] = [
+          'date' => ['#plain_text' => $date->format(DATETIME_DATE_STORAGE_FORMAT)],
+          'date_separator' => ['#plain_text' => ' ' . $date_separator . ' '],
+          'start_time' => ['#plain_text' => $start_time->format($storage_format)],
+          'time_separator' => ['#plain_text' => ' ' . $time_separator . ' '],
+          'end_time' => ['#plain_text' => $end_time->format($storage_format)],
+        ];
       }
     }
 
