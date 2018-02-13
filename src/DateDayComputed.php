@@ -49,7 +49,7 @@ class DateDayComputed extends TypedData {
       $date = DrupalDateTime::createFromFormat($storage_format, $value, DATETIME_STORAGE_TIMEZONE);
       if ($date instanceof DrupalDateTime && !$date->hasErrors()) {
         $this->date = $date;
-        // If the format did not include an explicit time portion, then the
+        // The format did not include an explicit time portion, then the
         // time will be set from the current time instead. For consistency, we
         // set the time to 12:00:00 UTC for date-only fields. This is used so
         // that the local date portion is the same, across nearly all time

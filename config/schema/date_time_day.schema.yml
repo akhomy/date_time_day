@@ -44,7 +44,7 @@ field.formatter.settings.datetimeday_default:
   type: field.formatter.settings.datetimeday_base
   label: 'Date Time Day default display format settings'
   mapping:
-    date_separator:
+    day_separator:
       type: label
       label: 'Date separator'
       translation context: 'Date separator'
@@ -54,13 +54,16 @@ field.formatter.settings.datetimeday_default:
       translation context: 'Time separator'
     format_type:
       type: string
-      label: 'Date format'
+      label: 'Day format'
+    time_format_type:
+      type: string
+      label: 'Time format'
 
 field.formatter.settings.datetimeday_h_i_partial_time:
   type: field.formatter.settings.datetimeday_base
   label: 'Date time day plain display format settings'
   mapping:
-    date_separator:
+    day_separator:
       type: label
       label: 'Date separator'
       translation context: 'Date separator'
@@ -71,3 +74,6 @@ field.formatter.settings.datetimeday_h_i_partial_time:
     format_type:
       type: string
       label: 'Date format'
+    time_format_type:
+      type: string
+      label: 'Time format'

@@ -25,8 +25,8 @@ class DateTimeDayFieldTest extends DateTestBase {
    */
   protected $defaultSettings = [
     'timezone_override' => '',
-    'date_separator' => '-',
-    'time_separator' => ',',
+    'day_separator' => ',',
+    'time_separator' => '-',
   ];
 
   /**

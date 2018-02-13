@@ -78,7 +78,8 @@ class SeparatorsTranslationTest extends KernelTestBase {
       'label' => 'hidden',
       'settings' => [
         'format_type' => 'fallback',
-        'date_separator' => 'D_UNTRANSLATED',
+        'time_format_type' => 'fallback',
+        'day_separator' => 'D_UNTRANSLATED',
         'time_separator' => 'T_UNTRANSLATED',
       ],
     ];
@@ -118,7 +119,7 @@ class SeparatorsTranslationTest extends KernelTestBase {
     /** @var \Drupal\language\ConfigurableLanguageManagerInterface $language_manager */
     $language_manager = $this->container->get('language_manager');
     $language_manager->getLanguageConfigOverride('nl', 'core.entity_view_display.entity_test.entity_test.default')
-      ->set('content.' . $this->fieldStorage->getName() . '.settings.date_separator', 'DNL_TRANSLATED!')
+      ->set('content.' . $this->fieldStorage->getName() . '.settings.day_separator', 'DNL_TRANSLATED!')
       ->save();
     $language_manager->getLanguageConfigOverride('nl', 'core.entity_view_display.entity_test.entity_test.default')
       ->set('content.' . $this->fieldStorage->getName() . '.settings.time_separator', 'TNL_TRANSLATED!')
