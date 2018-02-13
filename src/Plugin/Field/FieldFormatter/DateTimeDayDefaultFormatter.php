@@ -30,11 +30,14 @@ class DateTimeDayDefaultFormatter extends DateTimeDefaultFormatter {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return [
+    $default_settings = [
       'day_separator' => ',',
       'time_separator' => '-',
       'time_format_type' => 'html_time',
     ] + parent::defaultSettings();
+    // Override format type with our custom value.
+    $default_settings['format_type'] = 'html_date';
+    return $default_settings;
   }
 
   /**
