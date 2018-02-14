@@ -3,6 +3,7 @@
 namespace Drupal\Tests\date_time_day\Functional;
 
 use Drupal\Tests\datetime\Functional\DateTestBase;
+use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
 
 /**
  * Tests date_time_day field functionality.
@@ -37,31 +38,55 @@ class DateTimeDayFieldTest extends DateTestBase {
   }
 
   /**
-   * Test the default field type.
+   * Test the default field type and widget.
    */
-  public function testDateTimeDayTypeDefaultField() {
-
+  public function testDateTimeDayTypeDefaultWidgetField() {
+    $field_name = $this->fieldStorage->getName();
+    $field_label = $this->field->label();
+    // Ensure field is set to a date-only field.
+    $this->fieldStorage->setSetting('datetime_type', DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT);
+    $this->fieldStorage->save();
+    // Display creation form.
+    $this->drupalGet('entity_test/add');
+    $this->assertFieldByName("{$field_name}[0][value][date]", '', 'Date element found.');
+    $this->assertFieldByName("{$field_name}[0][start_time_value]", '', 'Start time element found.');
+    $this->assertFieldByName("{$field_name}[0][end_time_value]", '', 'End time element found.');
+    $this->assertFieldByXPath('//*[@id="edit-' . $field_name . '-wrapper"]//label[contains(@class, "js-form-required")]', TRUE, 'Required markup found');
+    $this->assertFieldByXPath('//fieldset[@id="edit-' . $field_name . '-0"]/legend', $field_label, 'Fieldset and label found');
+    $this->assertFieldByXPath('//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]', NULL, 'ARIA described-by found');
+    $this->assertFieldByXPath('//div[@id="edit-' . $field_name . '-0--description"]', NULL, 'ARIA description found');
+    // Build up dates in the UTC timezone.
+    // Submit a valid date and ensure it is accepted.
+    // Verify the date doesn't change when entity is edited through the form.
+    // Verify that the default formatter works.
+    // Test that allowed markup in custom format is preserved and XSS is
+    // removed.
   }
 
   /**
-   * Test with seconds field type.
+   * Test with seconds field type and widget.
    */
-  public function testDateTimeDayTypeSecondsField() {
-
-  }
-
-  /**
-   * Test the default field widget.
-   */
-  public function testDateTimeDayDefaultWidgetField() {
-
-  }
-
-  /**
-   * Test with seconds field widget.
-   */
-  public function testDateTimeDaySecondsWidgetField() {
-
+  public function testDateTimeDayTypeSecondsWidgetField() {
+    $field_name = $this->fieldStorage->getName();
+    $field_label = $this->field->label();
+    // Ensure field is set to a date-only field.
+    $this->fieldStorage->setSetting('datetime_type', DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT);
+    $this->fieldStorage->save();
+    // Display creation form.
+    $this->drupalGet('entity_test/add');
+    $this->assertFieldByName("{$field_name}[0][value][date]", '', 'Date element found.');
+    $this->assertFieldByName("{$field_name}[0][start_time_value]", '', 'Start time element found.');
+    $this->assertFieldByName("{$field_name}[0][end_time_value]", '', 'End time element found.');
+    $this->assertFieldByXPath('//*[@id="edit-' . $field_name . '-wrapper"]//label[contains(@class, "js-form-required")]', TRUE, 'Required markup found');
+    $this->assertFieldByXPath('//fieldset[@id="edit-' . $field_name . '-0"]/legend', $field_label, 'Fieldset and label found');
+    $this->assertFieldByXPath('//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]', NULL, 'ARIA described-by found');
+    $this->assertFieldByXPath('//div[@id="edit-' . $field_name . '-0--description"]', NULL, 'ARIA description found');
+    // Build up dates in the UTC timezone.
+    // Submit a valid date and ensure it is accepted.
+    // Verify the date doesn't change when entity is edited through the form.
+    // Verify that the default formatter works.
+    // Test that allowed markup in custom format is preserved and XSS is
+    // removed.
   }
 
   /**
