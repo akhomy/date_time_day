@@ -4,6 +4,12 @@ namespace Drupal\Tests\date_time_day\Functional;
 
 use Drupal\Tests\datetime\Functional\DateTestBase;
 use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
+use Drupal\Component\Utility\Unicode;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Datetime\Entity\DateFormat;
+use Drupal\entity_test\Entity\EntityTest;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Tests date_time_day field functionality.
@@ -40,7 +46,7 @@ class DateTimeDayFieldTest extends DateTestBase {
   /**
    * Test the default field type and widget.
    */
-  public function testDateTimeDayTypeDefaultWidgetField() {
+  public function testDateTimeDayTypeDefaultWithWidgetField() {
     $field_name = $this->fieldStorage->getName();
     $field_label = $this->field->label();
     // Ensure field is set to a date-only field.
@@ -56,17 +62,46 @@ class DateTimeDayFieldTest extends DateTestBase {
     $this->assertFieldByXPath('//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]', NULL, 'ARIA described-by found');
     $this->assertFieldByXPath('//div[@id="edit-' . $field_name . '-0--description"]', NULL, 'ARIA description found');
     // Build up dates in the UTC timezone.
+    $date_value = '2012-12-31 00:00:00';
+    $date = new DrupalDateTime($date_value, 'UTC');
+    $start_time_value = '10:00';
+    $end_time_value = '19:00';
     // Submit a valid date and ensure it is accepted.
+    $date_format = DateFormat::load('html_date')->getPattern();
+
+    $edit = [
+      "{$field_name}[0][value][date]" => $date->format($date_format),
+      "{$field_name}[0][start_time_value]" => $start_time_value,
+      "{$field_name}[0][end_time_value]" => $end_time_value,
+    ];
+    $this->drupalPostForm(NULL, $edit, t('Save'));
+    preg_match('|entity_test/manage/(\d+)|', $this->getUrl(), $match);
+    $id = $match[1];
+    $this->assertText(t('entity_test @id has been created.', ['@id' => $id]));
+    $this->assertRaw($date->format($date_format));
+    $this->assertNoRaw($start_time_value);
+    $this->assertNoRaw($end_time_value);
     // Verify the date doesn't change when entity is edited through the form.
-    // Verify that the default formatter works.
-    // Test that allowed markup in custom format is preserved and XSS is
-    // removed.
+    $entity = EntityTest::load($id);
+    $this->assertEqual('12/30/2012', $entity->{$field_name}->value);
+    $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
+    $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
+    $this->drupalGet('entity_test/manage/' . $id . '/edit');
+    $this->drupalPostForm(NULL, [], t('Save'));
+    $this->drupalGet('entity_test/manage/' . $id . '/edit');
+    $this->drupalPostForm(NULL, [], t('Save'));
+    $this->drupalGet('entity_test/manage/' . $id . '/edit');
+    $this->drupalPostForm(NULL, [], t('Save'));
+    $entity = EntityTest::load($id);
+    $this->assertEqual('12/30/2012', $entity->{$field_name}->value);
+    $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
+    $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
   }
 
   /**
    * Test with seconds field type and widget.
    */
-  public function testDateTimeDayTypeSecondsWidgetField() {
+  public function testDateTimeDayTypeSecondsWithWidgetField() {
     $field_name = $this->fieldStorage->getName();
     $field_label = $this->field->label();
     // Ensure field is set to a date-only field.
@@ -82,32 +117,84 @@ class DateTimeDayFieldTest extends DateTestBase {
     $this->assertFieldByXPath('//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]', NULL, 'ARIA described-by found');
     $this->assertFieldByXPath('//div[@id="edit-' . $field_name . '-0--description"]', NULL, 'ARIA description found');
     // Build up dates in the UTC timezone.
+    $date_value = '2012-12-31 00:00:00';
+    $date = new DrupalDateTime($date_value, 'UTC');
+    $start_time_value = '10:10:10';
+    $end_time_value = '19:19:19';
     // Submit a valid date and ensure it is accepted.
+    $date_format = DateFormat::load('html_date')->getPattern();
+
+    $edit = [
+      "{$field_name}[0][value][date]" => $date->format($date_format),
+      "{$field_name}[0][start_time_value]" => $start_time_value,
+      "{$field_name}[0][end_time_value]" => $end_time_value,
+    ];
+    $this->drupalPostForm(NULL, $edit, t('Save'));
+    preg_match('|entity_test/manage/(\d+)|', $this->getUrl(), $match);
+    $id = $match[1];
+    $this->assertText(t('entity_test @id has been created.', ['@id' => $id]));
+    $this->assertRaw($date->format($date_format));
+    $this->assertNoRaw($start_time_value);
+    $this->assertNoRaw($end_time_value);
     // Verify the date doesn't change when entity is edited through the form.
-    // Verify that the default formatter works.
-    // Test that allowed markup in custom format is preserved and XSS is
-    // removed.
+    $entity = EntityTest::load($id);
+    $this->assertEqual('12/30/2012', $entity->{$field_name}->value);
+    $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
+    $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
+    $this->drupalGet('entity_test/manage/' . $id . '/edit');
+    $this->drupalPostForm(NULL, [], t('Save'));
+    $this->drupalGet('entity_test/manage/' . $id . '/edit');
+    $this->drupalPostForm(NULL, [], t('Save'));
+    $this->drupalGet('entity_test/manage/' . $id . '/edit');
+    $this->drupalPostForm(NULL, [], t('Save'));
+    $entity = EntityTest::load($id);
+    $this->assertEqual('12/30/2012', $entity->{$field_name}->value);
+    $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
+    $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
   }
 
   /**
-   * Test default value functionality.
-   */
-  public function testDefaultValue() {
-
-  }
-
-  /**
-   * Test that invalid values are caught and marked as invalid.
-   */
-  public function testInvalidField() {
-
-  }
-
-  /**
-   * Tests that 'Date' field storage setting form is disabled if field has data.
+   * Tests that field storage setting form is disabled if field has data.
    */
   public function testDateStorageSettings() {
+    // Create a test content type.
+    $this->drupalCreateContentType(['type' => 'date_content']);
 
+    // Create a field storage with settings to validate.
+    $field_name = Unicode::strtolower($this->randomMachineName());
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'type' => 'datetimeday',
+      'settings' => [
+        'datetime_type' => DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT,
+      ],
+    ]);
+    $field_storage->save();
+    $field = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'field_name' => $field_name,
+      'bundle' => 'date_content',
+    ]);
+    $field->save();
+
+    entity_get_form_display('node', 'date_content', 'default')
+      ->setComponent($field_name, [
+        'type' => 'datetimeday_default',
+      ])
+      ->save();
+    $edit = [
+      'title[0][value]' => $this->randomString(),
+      'body[0][value]' => $this->randomString(),
+      $field_name . '[0][value][date]' => '2016-04-01',
+      $field_name . '[0][start_time_value]' => '10:00',
+      $field_name . '[0][end_time_value]' => '19:00',
+    ];
+    $this->drupalPostForm('node/add/date_content', $edit, t('Save'));
+    $this->drupalGet('admin/structure/types/manage/date_content/fields/node.date_content.' . $field_name . '/storage');
+    $result = $this->xpath("//*[@id='edit-settings-datetime-type' and contains(@disabled, 'disabled')]");
+    $this->assertEqual(count($result), 1, "Changing datetime setting is disabled.");
+    $this->assertText('There is data for this field in the database. The field settings can no longer be changed.');
   }
 
 }
