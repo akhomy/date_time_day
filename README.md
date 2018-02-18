@@ -1,3 +1,7 @@
+**8.x-1.x** [![Build Status]
+(https://travis-ci.org/a-kom/date_time_day.svg?branch=8.x-1.x)]
+(https://travis-ci.org/a-kom/date_time_day)
+
 # CONTENTS OF THIS FILE
   
  * Introduction
@@ -22,7 +26,7 @@ This module requires the following modules:
 ## Installation:
 
 1. Download and enable as normal module.
-2. Go to the any entity and add new field with Date Time Day type.
+2. Go to the any entity and add new field with date time day type.
 
 ## Configuration
 

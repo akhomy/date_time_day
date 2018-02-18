@@ -9,7 +9,7 @@ use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedData;
 
 /**
- * A computed property for times of date day time field items.
+ * A computed property for times of date time day field items.
  *
  * Required settings (below the definition's 'settings' key) are:
  *  - date source: The date property containing the to be computed date.

@@ -15,8 +15,8 @@ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
  *
  * @FieldType(
  *   id = "datetimeday",
- *   label = @Translation("Date Time Day"),
- *   description = @Translation("Create and store Date Time Day."),
+ *   label = @Translation("Date time day"),
+ *   description = @Translation("Create and store date time day field."),
  *   default_widget = "datetimeday_default",
  *   default_formatter = "datetimeday_default",
  *   list_class = "\Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayFieldItemList"

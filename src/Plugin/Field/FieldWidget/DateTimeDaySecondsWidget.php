@@ -11,7 +11,7 @@ use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
  *
  * @FieldWidget(
  *   id = "datetimeday_h_i_s_time",
- *   label = @Translation("Date Day Time with seconds"),
+ *   label = @Translation("Date time day with seconds"),
  *   field_types = {
  *     "datetimeday"
  *   }

@@ -11,7 +11,7 @@ use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
  *
  * @FieldWidget(
  *   id = "datetimeday_default",
- *   label = @Translation("Date Day Time"),
+ *   label = @Translation("Date time day"),
  *   field_types = {
  *     "datetimeday"
  *   }
