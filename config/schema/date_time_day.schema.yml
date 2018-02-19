@@ -1,14 +1,14 @@
-# Schema for the configuration files of the Date Time Day module.
+# Schema for the configuration files of the date time day module.
 
-# Date Time Day field type.
+# Date time day field type.
 
 field.storage_settings.datetimeday:
   type: field.storage_settings.datetime
-  label: 'Date Time Day settings'
+  label: 'Date time day storage settings'
   
 field.field_settings.datetimeday:
   type: field.field_settings.datetime
-  label: 'Date Time Day settings'
+  label: 'Date time day field settings'
 
 field.value.datetimeday:
   type: mapping
@@ -42,9 +42,9 @@ field.formatter.settings.datetimeday_base:
 
 field.formatter.settings.datetimeday_default:
   type: field.formatter.settings.datetimeday_base
-  label: 'Date Time Day default display format settings'
+  label: 'Date time day default display format settings'
   mapping:
-    date_separator:
+    day_separator:
       type: label
       label: 'Date separator'
       translation context: 'Date separator'
@@ -54,13 +54,16 @@ field.formatter.settings.datetimeday_default:
       translation context: 'Time separator'
     format_type:
       type: string
-      label: 'Date format'
+      label: 'Day format'
+    time_format_type:
+      type: string
+      label: 'Time format'
 
 field.formatter.settings.datetimeday_h_i_partial_time:
   type: field.formatter.settings.datetimeday_base
   label: 'Date time day plain display format settings'
   mapping:
-    date_separator:
+    day_separator:
       type: label
       label: 'Date separator'
       translation context: 'Date separator'
@@ -71,3 +74,6 @@ field.formatter.settings.datetimeday_h_i_partial_time:
     format_type:
       type: string
       label: 'Date format'
+    time_format_type:
+      type: string
+      label: 'Time format'

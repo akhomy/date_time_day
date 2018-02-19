@@ -66,7 +66,8 @@ class DateTimeDayItemTest extends FieldKernelTestBase {
       'label' => 'hidden',
       'settings' => [
         'format_type' => 'fallback',
-        'date_separator' => 'UNTRANSLATED',
+        'time_format_type' => 'fallback',
+        'day_separator' => 'UNTRANSLATED',
         'time_separator' => 'UNTRANSLATED',
       ],
     ];
