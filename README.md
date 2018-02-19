@@ -1,6 +1,4 @@
-**8.x-1.x** [![Build Status]
-(https://travis-ci.org/a-kom/date_time_day.svg?branch=8.x-1.x)]
-(https://travis-ci.org/a-kom/date_time_day)
+**8.x-1.x** [![Build Status](https://travis-ci.org/a-kom/date_time_day.svg?branch=8.x-1.x)](https://travis-ci.org/a-kom/date_time_day)
 
 # CONTENTS OF THIS FILE
   
