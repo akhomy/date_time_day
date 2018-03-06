@@ -25,7 +25,7 @@ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 class DateTimeDayItem extends DateTimeItem {
 
   /**
-   * Value for the 'datetime_type' setting: store only a time.
+   * Values for the 'datetime_type' setting: store only a time, time & seconds.
    */
   const DATEDAY_TIME_DEFAULT_TYPE_FORMAT = 'time';
   const DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT = 'H:i';

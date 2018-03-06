@@ -5,12 +5,10 @@
  * Main module file.
  */
 
-use Drupal\Core\Routing\RouteMatchInterface;
-
 /**
  * Implements hook_help().
  */
-function date_time_day_help($route_name, RouteMatchInterface $route_match) {
+function date_time_day_help($route_name) {
   switch ($route_name) {
     case 'help.page.date_time_day':
       $output = '';
