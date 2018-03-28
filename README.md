@@ -1,45 +1,46 @@
-**8.x-1.x** [![Build Status](https://travis-ci.org/a-kom/date_time_day.svg?branch=8.x-1.x)](https://travis-ci.org/a-kom/date_time_day)
-
-# CONTENTS OF THIS FILE
+CONTENTS OF THIS FILE
+---------------------
   
  * Introduction
  * Requirements
  * Installation
  * Configuration
- * FAQ
  * Maintainers
  
-## Introduction
+INTRODUCTION
+---------------------
 
 Datetime Time Day provides the ability 
 to store start, end times of the single day.
 
-## Requirements
+ * For a full description of the module, visit the project page:
+   https://drupal.org/project/date_time_day
+
+ * To submit bug reports and feature suggestions, or to track changes:
+   https://drupal.org/project/issues/date_time_day
+
+REQUIREMENTS
+---------------------
 
 This module requires the following modules:
 
  * Datetime (Drupal core)
  * Field (Drupal core)
 
-## Installation:
+INSTALLATION
+---------------------
 
-1. Download and enable as normal module.
-2. Go to the any entity and add new field with date time day type.
+* Download and enable as normal module.
+* Go to the any entity and add new field with date time day type.
 
-## Configuration
+CONFIGURATION
+-------------
 
 You could configure form view mode and display view mode, like in any
 standard field. See Field UI help for more details.
 
-## Uninstalling:
+MAINTAINERS
+-----------
 
-1. Remove all dependend fields, otherwise you won't be able to uninstall it.
-2. Uninstall as a normal module.
-
-## FAQ
-
-TBD.
-
-## Maintainers
-
-- Andriy Khomych(andriy.khomych) https://www.drupal.org/u/andriy-khomych
+Current maintainers:
+* Andriy Khomych(andriy.khomych) - https://www.drupal.org/u/andriy-khomych
