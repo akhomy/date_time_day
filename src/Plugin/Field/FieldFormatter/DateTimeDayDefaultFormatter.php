@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\datetime\Plugin\Field\FieldFormatter\DateTimeDefaultFormatter;
 use Drupal\date_time_day\DateTimeDayTrait;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 
 /**
  * Plugin implementation of the 'Default' formatter for 'datetimeday' fields.
@@ -127,6 +128,40 @@ class DateTimeDayDefaultFormatter extends DateTimeDefaultFormatter {
       '#html' => FALSE,
       '#attributes' => [
         'time' => $this->formatTime($dateTime),
+      ],
+      '#cache' => [
+        'contexts' => [
+          'timezone',
+        ],
+      ],
+    ];
+
+    return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @todo: this fix only for Drupal 8.3.7 and earlier, think about remove.
+   * @see https://www.drupal.org/project/projectapplications/issues/2958753
+   */
+  protected function buildDateWithIsoAttribute(DrupalDateTime $date) {
+    if ($this->getFieldSetting('datetime_type') == DateTimeItem::DATETIME_TYPE_DATE) {
+      // A date without time will pick up the current time, use the default.
+      datetime_date_default_time($date);
+    }
+
+    // Create the ISO date in Universal Time.
+    $iso_date = $date->format("Y-m-d\TH:i:s") . 'Z';
+
+    $this->setTimeZone($date);
+
+    $build = [
+      '#theme' => 'time',
+      '#text' => $this->formatDate($date),
+      '#html' => FALSE,
+      '#attributes' => [
+        'datetime' => $iso_date,
       ],
       '#cache' => [
         'contexts' => [
