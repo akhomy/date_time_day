@@ -34,19 +34,19 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
     if ($items[$delta]->date) {
       /** @var \Drupal\Core\Datetime\DrupalDateTime $value */
       $value = $items[$delta]->date;
-      $element['value']['#default_value'] = $this->createDefaultValue($value, $element['value']['#date_timezone']);
+      $element['value']['#default_value'] = $this->createDateTimeDayDefaultValue($value, $element['value']['#date_timezone']);
     }
 
     if ($items[$delta]->start_time) {
       /** @var \Drupal\Core\Datetime\DrupalDateTime $start_date */
       $start_time = $items[$delta]->start_time;
-      $element['start_time_value']['#default_value'] = $this->createDefaultValue($start_time, $element['start_time_value']['#date_timezone']);
+      $element['start_time_value']['#default_value'] = $this->createDateTimeDayDefaultValue($start_time, $element['start_time_value']['#date_timezone']);
     }
 
     if ($items[$delta]->end_time) {
       /** @var \Drupal\Core\Datetime\DrupalDateTime $end_date */
       $end_time = $items[$delta]->end_time;
-      $element['end_time_value']['#default_value'] = $this->createDefaultValue($end_time, $element['end_time_value']['#date_timezone']);
+      $element['end_time_value']['#default_value'] = $this->createDateTimeDayDefaultValue($end_time, $element['end_time_value']['#date_timezone']);
     }
 
     return $element;
@@ -129,7 +129,7 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
    * @return \Drupal\Core\Datetime\DrupalDateTime
    *   A date object for use as a default value in a field widget.
    */
-  protected function createDefaultValue(DrupalDateTime $date, $timezone) {
+  protected function createDateTimeDayDefaultValue(DrupalDateTime $date, $timezone) {
     $date->setTimezone(new \DateTimeZone($timezone));
     return $date;
   }
