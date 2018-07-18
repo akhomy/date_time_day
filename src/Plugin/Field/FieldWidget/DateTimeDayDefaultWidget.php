@@ -52,6 +52,7 @@ class DateTimeDayDefaultWidget extends DateTimeDayWidgetBase {
       '#date_time_callbacks' => [],
     ];
     $element['start_time_value'] = [
+      '#title' => $this->t('Start time'),
       '#type' => 'textfield',
       '#size' => 12,
       '#attributes' => ['pattern' => '([01]?[0-9]|2[0-3]):[0-5][0-9]', 'title' => 'hh:mm'],
@@ -63,6 +64,7 @@ class DateTimeDayDefaultWidget extends DateTimeDayWidgetBase {
     }
 
     $element['end_time_value'] = [
+      '#title' => $this->t('End time'),
       '#type' => 'textfield',
       '#size' => 12,
       '#attributes' => ['pattern' => '([01]?[0-9]|2[0-3]):[0-5][0-9]', 'title' => 'hh:mm'],
