@@ -29,6 +29,7 @@ class DateTimeDayItem extends DateTimeItem {
    */
   const DATEDAY_TIME_DEFAULT_TYPE_FORMAT = 'time';
   const DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT = 'H:i';
+  const DATE_TIME_DAY_Y_M_D_FORMAT = 'Y-m-d';
   const DATEDAY_TIME_TYPE_SECONDS_FORMAT = 'time_seconds';
   const DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT = 'H:i:s';
 
