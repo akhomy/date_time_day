@@ -1,16 +1,16 @@
 CONTENTS OF THIS FILE
 ---------------------
-  
+
  * Introduction
  * Requirements
  * Installation
  * Configuration
  * Maintainers
- 
+
 INTRODUCTION
 ---------------------
 
-Datetime Time Day provides the ability 
+Datetime Time Day provides the ability
 to store start, end times of the single day.
 
  * For a full description of the module, visit the project page:
@@ -42,5 +42,4 @@ standard field. See Field UI help for more details.
 MAINTAINERS
 -----------
 
-Current maintainers:
 * Andriy Khomych(andriy.khomych) - https://www.drupal.org/u/andriy-khomych
