@@ -10,6 +10,11 @@
       "name": "Andriy Khomych",
       "homepage": "https://www.drupal.org/u/andriy-khomych",
       "role": "Maintainer"
+    },
+    {
+        "name": "Roman Salo",
+        "homepage": "https://www.drupal.org/u/rolki",
+        "role": "Maintainer"
     }
   ],
   "minimum-stability": "dev",
