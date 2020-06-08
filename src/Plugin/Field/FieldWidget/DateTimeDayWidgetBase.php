@@ -5,6 +5,7 @@ namespace Drupal\date_time_day\Plugin\Field\FieldWidget;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\datetime\Plugin\Field\FieldWidget\DateTimeWidgetBase;
 use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
 
@@ -63,7 +64,7 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
       if (!empty($item['value']) && $item['value'] instanceof DrupalDateTime) {
         /** @var \Drupal\Core\Datetime\DrupalDateTime $value_date */
         $value_date = $item['value'];
-        $value_format = DATETIME_DATE_STORAGE_FORMAT;
+        $value_format = DateTimeItemInterface::DATE_STORAGE_FORMAT;
         // Adjust the date for storage.
         $value_date->setTimezone(new \DateTimezone(DATETIME_STORAGE_TIMEZONE));
         $item['value'] = $value_date->format($value_format);

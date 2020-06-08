@@ -9,6 +9,7 @@ use Drupal\Core\TypedData\DataDefinition;
 use Drupal\date_time_day\DateDayComputed;
 use Drupal\date_time_day\DateTimeDayComputed;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
 /**
  * Plugin implementation of the 'datetimeday' field type.
@@ -29,7 +30,6 @@ class DateTimeDayItem extends DateTimeItem {
    */
   const DATEDAY_TIME_DEFAULT_TYPE_FORMAT = 'time';
   const DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT = 'H:i';
-  const DATE_TIME_DAY_Y_M_D_FORMAT = 'Y-m-d';
   const DATEDAY_TIME_TYPE_SECONDS_FORMAT = 'time_seconds';
   const DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT = 'H:i:s';
 
@@ -118,12 +118,12 @@ class DateTimeDayItem extends DateTimeItem {
     $end = $start + 3600;
     $type = $field_definition->getSetting('datetime_type');
     if ($type == static::DATEDAY_TIME_DEFAULT_TYPE_FORMAT) {
-      $values['value'] = gmdate(DATETIME_DATE_STORAGE_FORMAT, $timestamp);
+      $values['value'] = gmdate(DateTimeItemInterface::DATE_STORAGE_FORMAT, $timestamp);
       $values['start_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT, $start);
       $values['end_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT, $end);
     }
     if ($type == static::DATEDAY_TIME_TYPE_SECONDS_FORMAT) {
-      $values['value'] = gmdate(DATETIME_DATE_STORAGE_FORMAT, $timestamp);
+      $values['value'] = gmdate(DateTimeItemInterface::DATE_STORAGE_FORMAT, $timestamp);
       $values['start_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT, $start);
       $values['end_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT, $end);
     }

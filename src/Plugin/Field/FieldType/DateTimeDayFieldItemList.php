@@ -8,6 +8,7 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeFieldItemList;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
 /**
  * Represents a configurable entity datetimeday field.
@@ -137,7 +138,7 @@ class DateTimeDayFieldItemList extends DateTimeFieldItemList {
       $default_values = [[]];
       if (!empty($default_value[0]['default_date_type'])) {
         $date = new DrupalDateTime($default_value[0]['default_date'], DATETIME_STORAGE_TIMEZONE);
-        $value = $date->format(DATETIME_DATE_STORAGE_FORMAT);
+        $value = $date->format(DateTimeItemInterface::DATE_STORAGE_FORMAT);
         $default_values[0]['value'] = $value;
         $default_values[0]['date'] = $date;
       }

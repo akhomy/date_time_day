@@ -6,6 +6,7 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedData;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
 /**
  * A computed property for date of date day field items.
@@ -44,7 +45,7 @@ class DateDayComputed extends TypedData {
     $item = $this->getParent();
     $value = $item->{($this->definition->getSetting('date source'))};
 
-    $storage_format = DATETIME_DATE_STORAGE_FORMAT;
+    $storage_format = DateTimeItemInterface::DATE_STORAGE_FORMAT;
     try {
       $date = DrupalDateTime::createFromFormat($storage_format, $value, DATETIME_STORAGE_TIMEZONE);
       if ($date instanceof DrupalDateTime && !$date->hasErrors()) {
@@ -54,11 +55,8 @@ class DateDayComputed extends TypedData {
         // set the time to 12:00:00 UTC for date-only fields. This is used so
         // that the local date portion is the same, across nearly all time
         // zones.
-        // @see datetime_date_default_time()
         // @see http://php.net/manual/en/datetime.createfromformat.php
-        // @todo Update comment and/or code per the chosen solution in
-        //   https://www.drupal.org/node/2830094
-        $this->date->setTime(12, 0, 0);
+        $this->date->setDefaultDateTime();
       }
     }
     catch (\Exception $e) {

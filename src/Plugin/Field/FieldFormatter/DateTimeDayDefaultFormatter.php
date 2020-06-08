@@ -148,7 +148,7 @@ class DateTimeDayDefaultFormatter extends DateTimeDefaultFormatter {
   protected function buildDateWithIsoAttribute(DrupalDateTime $date) {
     if ($this->getFieldSetting('datetime_type') == DateTimeItem::DATETIME_TYPE_DATE) {
       // A date without time will pick up the current time, use the default.
-      datetime_date_default_time($date);
+      $date->setDefaultDateTime();
     }
 
     // Create the ISO date in Universal Time.

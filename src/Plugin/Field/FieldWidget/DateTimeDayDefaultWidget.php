@@ -28,7 +28,7 @@ class DateTimeDayDefaultWidget extends DateTimeDayWidgetBase {
     switch ($this->getFieldSetting('datetime_type')) {
       case DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT:
         // Date field properties.
-        $value_date_format = DateTimeDayItem::DATE_TIME_DAY_Y_M_D_FORMAT;
+        $value_date_format = DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT;
         $value_date_type = 'date';
         $value_time_format = '';
         $value_time_type = 'none';
@@ -36,7 +36,7 @@ class DateTimeDayDefaultWidget extends DateTimeDayWidgetBase {
 
       default:
         // Date field properties.
-        $value_date_format = DateTimeDayItem::DATE_TIME_DAY_Y_M_D_FORMAT;
+        $value_date_format = DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT;
         $value_date_type = 'date';
         $value_time_format = '';
         $value_time_type = 'none';

@@ -5,6 +5,7 @@ namespace Drupal\date_time_day\Plugin\Field\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
 /**
  * Plugin implementation of the 'datetimeday_h_i_s_time' widget.
@@ -29,7 +30,7 @@ class DateTimeDaySecondsWidget extends DateTimeDayWidgetBase {
       case DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT:
       case DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT:
         // Date field properties.
-        $value_date_format = DATETIME_DATE_STORAGE_FORMAT;
+        $value_date_format = DateTimeItemInterface::DATE_STORAGE_FORMAT;
         $value_date_type = 'date';
         $value_time_format = '';
         $value_time_type = 'none';
@@ -42,7 +43,7 @@ class DateTimeDaySecondsWidget extends DateTimeDayWidgetBase {
 
       default:
         // Date field properties.
-        $value_date_format = DATETIME_DATE_STORAGE_FORMAT;
+        $value_date_format = DateTimeItemInterface::DATE_STORAGE_FORMAT;
         $value_date_type = 'date';
         $value_time_format = '';
         $value_time_type = 'none';
