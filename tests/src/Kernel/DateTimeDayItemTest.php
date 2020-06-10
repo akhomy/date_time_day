@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\date_time_day\Kernel;
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
 use Drupal\entity_test\Entity\EntityTest;
@@ -47,7 +46,7 @@ class DateTimeDayItemTest extends FieldKernelTestBase {
 
     // Add a date_time_day field.
     $this->fieldStorage = FieldStorageConfig::create([
-      'field_name' => Unicode::strtolower($this->randomMachineName()),
+      'field_name' => mb_strtolower($this->randomMachineName()),
       'entity_type' => 'entity_test',
       'type' => 'datetimeday',
       'settings' => ['datetime_type' => DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT],

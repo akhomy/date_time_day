@@ -4,7 +4,6 @@ namespace Drupal\Tests\date_time_day\Functional;
 
 use Drupal\Tests\datetime\Functional\DateTestBase;
 use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
-use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Datetime\Entity\DateFormat;
 use Drupal\entity_test\Entity\EntityTest;
@@ -194,7 +193,7 @@ class DateTimeDayFieldTest extends DateTestBase {
     $this->drupalCreateContentType(['type' => 'date_content']);
 
     // Create a field storage with settings to validate.
-    $field_name = Unicode::strtolower($this->randomMachineName());
+    $field_name = mb_strtolower($this->randomMachineName());
     $field_storage = FieldStorageConfig::create([
       'field_name' => $field_name,
       'entity_type' => 'node',
@@ -211,7 +210,10 @@ class DateTimeDayFieldTest extends DateTestBase {
     ]);
     $field->save();
 
-    entity_get_form_display('node', 'date_content', 'default')
+    /** @var \Drupal\Core\Entity\EntityDisplayRepositoryInterface $display_repository */
+    $display_repository = \Drupal::service('entity_display.repository');
+
+    $display_repository->getFormDisplay('node', 'date_content', 'default')
       ->setComponent($field_name, [
         'type' => 'datetimeday_default',
       ])
