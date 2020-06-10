@@ -137,21 +137,21 @@ class DateTimeDayFieldItemList extends DateTimeFieldItemList {
       $storage_format = $definition->getSetting('datetime_type') == DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT ? DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT : DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT;
       $default_values = [[]];
       if (!empty($default_value[0]['default_date_type'])) {
-        $date = new DrupalDateTime($default_value[0]['default_date'], DATETIME_STORAGE_TIMEZONE);
+        $date = new DrupalDateTime($default_value[0]['default_date'], DateTimeItemInterface::STORAGE_TIMEZONE);
         $value = $date->format(DateTimeItemInterface::DATE_STORAGE_FORMAT);
         $default_values[0]['value'] = $value;
         $default_values[0]['date'] = $date;
       }
 
       if (!empty($default_value[0]['default_start_time_type'])) {
-        $start_time = new DrupalDateTime($default_value[0]['default_start_time'], DATETIME_STORAGE_TIMEZONE);
+        $start_time = new DrupalDateTime($default_value[0]['default_start_time'], DateTimeItemInterface::STORAGE_TIMEZONE);
         $start_time_value = $start_time->format($storage_format);
         $default_values[0]['start_time_value'] = $start_time_value;
         $default_values[0]['start_time'] = $start_time;
       }
 
       if (!empty($default_value[0]['default_end_time_type'])) {
-        $end_time = new DrupalDateTime($default_value[0]['default_end_time'], DATETIME_STORAGE_TIMEZONE);
+        $end_time = new DrupalDateTime($default_value[0]['default_end_time'], DateTimeItemInterface::STORAGE_TIMEZONE);
         $end_time_value = $end_time->format($storage_format);
         $default_values[0]['end_time_value'] = $end_time_value;
         $default_values[0]['end_time'] = $end_time;

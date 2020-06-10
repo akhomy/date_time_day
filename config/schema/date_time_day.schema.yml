@@ -1,11 +1,14 @@
 # Schema for the configuration files of the date time day module.
 
 # Date time day field type.
-
 field.storage_settings.datetimeday:
-  type: field.storage_settings.datetime
+  type: mapping
   label: 'Date time day storage settings'
-  
+  mapping:
+    datetime_type:
+      type: string
+      label: 'Date type'
+
 field.field_settings.datetimeday:
   type: field.field_settings.datetime
   label: 'Date time day field settings'

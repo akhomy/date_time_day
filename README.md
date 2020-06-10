@@ -32,6 +32,7 @@ INSTALLATION
 
 * Download and enable as normal module.
 * Go to the any entity and add new field with date time day type.
+* Go to the form display and choose correct widget based on the field type.
 
 CONFIGURATION
 -------------

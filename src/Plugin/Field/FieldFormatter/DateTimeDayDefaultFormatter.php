@@ -141,9 +141,6 @@ class DateTimeDayDefaultFormatter extends DateTimeDefaultFormatter {
 
   /**
    * {@inheritdoc}
-   *
-   * @todo: this fix only for Drupal 8.3.7 and earlier, think about remove.
-   * @see https://www.drupal.org/project/projectapplications/issues/2958753
    */
   protected function buildDateWithIsoAttribute(DrupalDateTime $date) {
     if ($this->getFieldSetting('datetime_type') == DateTimeItem::DATETIME_TYPE_DATE) {

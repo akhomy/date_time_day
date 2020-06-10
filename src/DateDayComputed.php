@@ -47,7 +47,7 @@ class DateDayComputed extends TypedData {
 
     $storage_format = DateTimeItemInterface::DATE_STORAGE_FORMAT;
     try {
-      $date = DrupalDateTime::createFromFormat($storage_format, $value, DATETIME_STORAGE_TIMEZONE);
+      $date = DrupalDateTime::createFromFormat($storage_format, $value, DateTimeItemInterface::STORAGE_TIMEZONE);
       if ($date instanceof DrupalDateTime && !$date->hasErrors()) {
         $this->date = $date;
         // The format did not include an explicit time portion, then the

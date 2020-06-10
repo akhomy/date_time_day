@@ -3,12 +3,12 @@
 namespace Drupal\date_time_day\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\date_time_day\DateDayComputed;
 use Drupal\date_time_day\DateTimeDayComputed;
-use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
 /**
@@ -18,12 +18,11 @@ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
  *   id = "datetimeday",
  *   label = @Translation("Date time day"),
  *   description = @Translation("Create and store date time day field."),
- *   default_widget = "datetimeday_default",
  *   default_formatter = "datetimeday_default",
  *   list_class = "\Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayFieldItemList"
  * )
  */
-class DateTimeDayItem extends DateTimeItem {
+class DateTimeDayItem extends FieldItemBase {
 
   /**
    * Values for the 'datetime_type' setting: store only a time, time & seconds.
@@ -36,8 +35,20 @@ class DateTimeDayItem extends DateTimeItem {
   /**
    * {@inheritdoc}
    */
+  public static function defaultStorageSettings() {
+    return [
+      'datetime_type' => 'time',
+    ] + parent::defaultStorageSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
-    $properties = parent::propertyDefinitions($field_definition);
+    $properties['value'] = DataDefinition::create('datetime_iso8601')
+      ->setLabel(t('Date value'))
+      ->setRequired(TRUE);
+
     $properties['date'] = DataDefinition::create('any')
       ->setComputed(TRUE)
       ->setClass(DateDayComputed::class)
@@ -72,7 +83,18 @@ class DateTimeDayItem extends DateTimeItem {
    * {@inheritdoc}
    */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
-    $schema = parent::schema($field_definition);
+    $schema = [
+      'columns' => [
+        'value' => [
+          'description' => 'The date value.',
+          'type' => 'varchar',
+          'length' => 20,
+        ],
+      ],
+      'indexes' => [
+        'value' => ['value'],
+      ],
+    ];
 
     $schema['columns']['start_time_value'] = [
       'description' => 'The start time value.',
@@ -96,8 +118,8 @@ class DateTimeDayItem extends DateTimeItem {
 
     $element['datetime_type'] = [
       '#type' => 'select',
-      '#title' => t('Date type'),
-      '#description' => t('Choose the type of date to create.'),
+      '#title' => $this->t('Date type'),
+      '#description' => $this->t('Choose the type of date to create.'),
       '#default_value' => $this->getSetting('datetime_type'),
       '#options' => [
         static::DATEDAY_TIME_DEFAULT_TYPE_FORMAT => $this->t('Start, end time of day'),
@@ -105,7 +127,7 @@ class DateTimeDayItem extends DateTimeItem {
       ],
       '#disabled' => $has_data,
     ];
-
+    $form['#after_build'][] = [$this, 'afterBuild'];
     return $element;
   }
 
@@ -113,7 +135,7 @@ class DateTimeDayItem extends DateTimeItem {
    * {@inheritdoc}
    */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
-    $timestamp = REQUEST_TIME - mt_rand(0, 86400 * 365);
+    $timestamp = microtime() - mt_rand(0, 86400 * 365);
     $start = $timestamp - 3600;
     $end = $start + 3600;
     $type = $field_definition->getSetting('datetime_type');

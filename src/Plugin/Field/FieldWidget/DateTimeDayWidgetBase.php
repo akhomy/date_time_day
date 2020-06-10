@@ -66,7 +66,7 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
         $value_date = $item['value'];
         $value_format = DateTimeItemInterface::DATE_STORAGE_FORMAT;
         // Adjust the date for storage.
-        $value_date->setTimezone(new \DateTimezone(DATETIME_STORAGE_TIMEZONE));
+        $value_date->setTimezone(new \DateTimezone(DateTimeItemInterface::STORAGE_TIMEZONE));
         $item['value'] = $value_date->format($value_format);
       }
       if (!empty($item['start_time_value']) && $item['start_time_value'] instanceof DrupalDateTime) {
@@ -87,7 +87,7 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
             break;
         }
         // Adjust the date for storage.
-        $start_time_date->setTimezone(new \DateTimezone(DATETIME_STORAGE_TIMEZONE));
+        $start_time_date->setTimezone(new \DateTimezone(DateTimeItemInterface::STORAGE_TIMEZONE));
         $item['start_time_value'] = $start_time_date->format($start_time_format);
       }
 
@@ -109,7 +109,7 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
             break;
         }
         // Adjust the date for storage.
-        $end_time_date->setTimezone(new \DateTimezone(DATETIME_STORAGE_TIMEZONE));
+        $end_time_date->setTimezone(new \DateTimezone(DateTimeItemInterface::STORAGE_TIMEZONE));
         $item['end_time_value'] = $end_time_date->format($end_time_format);
       }
     }

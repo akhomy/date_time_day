@@ -60,7 +60,7 @@ class DateTimeDayDefaultWidget extends DateTimeDayWidgetBase {
     if ($items[$delta]->start_time) {
       /** @var \Drupal\Core\Datetime\DrupalDateTime $start_date */
       $start_time = $items[$delta]->start_time;
-      $element['start_time_value']['#default_value'] = $start_time->format(DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT);
+      $element['start_time_value']['#default_value'] = $start_time->format($value_date_format);
     }
 
     $element['end_time_value'] = [
@@ -72,7 +72,7 @@ class DateTimeDayDefaultWidget extends DateTimeDayWidgetBase {
     if ($items[$delta]->end_time) {
       /** @var \Drupal\Core\Datetime\DrupalDateTime $end_date */
       $end_time = $items[$delta]->end_time;
-      $element['end_time_value']['#default_value'] = $end_time->format(DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT);
+      $element['end_time_value']['#default_value'] = $end_time->format($value_date_format);
     }
     return $element;
   }
