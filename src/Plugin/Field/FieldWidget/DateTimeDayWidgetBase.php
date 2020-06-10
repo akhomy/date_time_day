@@ -19,6 +19,7 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
+    $element['#element_validate'][] = [$this, 'validateStartEnd'];
 
     // Wrap all of the selected elements with a fieldset.
     $element['#theme_wrappers'][] = 'fieldset';
@@ -133,6 +134,41 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
   protected function createDateTimeDayDefaultValue(DrupalDateTime $date, $timezone) {
     $date->setTimezone(new \DateTimeZone($timezone));
     return $date;
+  }
+
+  /**
+   * Validation callback to ensure that the end_time <= the end_time.
+   *
+   * @param array $element
+   *   An associative array containing the properties and children of the
+   *   generic form element.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   * @param array $complete_form
+   *   The complete form structure.
+   */
+  public function validateStartEnd(array &$element, FormStateInterface $form_state, array &$complete_form) {
+    $type = $this->getFieldSetting('datetime_type');
+    $start_date = $element['start_time_value']['#value'];
+    $storage_format = $type === DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT ? DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT : DateTimeDayItem::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT;
+    if ($type === DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT && strlen($start_date) === 5) {
+      $start_date = "$start_date:00";
+      $start_date = DrupalDateTime::createFromFormat($storage_format, $start_date);
+    }
+    $end_date = $element['end_time_value']['#value'];
+    if ($type === DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT && strlen($end_date) === 5) {
+      $end_date = "$end_date:00";
+      $end_date = DrupalDateTime::createFromFormat($storage_format, $end_date);
+    }
+
+    if ($start_date instanceof DrupalDateTime && $end_date instanceof DrupalDateTime) {
+      if ($start_date->getTimestamp() !== $end_date->getTimestamp()) {
+        $interval = $start_date->diff($end_date);
+        if ($interval->invert === 1) {
+          $form_state->setError($element, $this->t('The @title end date cannot be before the start date', ['@title' => $element['#title']]));
+        }
+      }
+    }
   }
 
 }
