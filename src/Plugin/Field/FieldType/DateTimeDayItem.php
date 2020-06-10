@@ -128,7 +128,6 @@ class DateTimeDayItem extends FieldItemBase {
       ],
       '#disabled' => $has_data,
     ];
-    $form['#after_build'][] = [$this, 'afterBuild'];
     return $element;
   }
 
