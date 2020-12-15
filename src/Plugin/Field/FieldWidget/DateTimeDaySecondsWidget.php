@@ -26,7 +26,7 @@ class DateTimeDaySecondsWidget extends DateTimeDayWidgetBase {
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
     // Identify the type of date and time elements to use.
-    switch ($this->getFieldSetting('datetime_type')) {
+    switch ($this->getFieldSetting('time_type')) {
       case DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT:
       case DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT:
         // Date field properties.

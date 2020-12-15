@@ -25,7 +25,7 @@ class DateTimeDayDefaultWidget extends DateTimeDayWidgetBase {
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
     // Identify the type of date and time elements to use.
-    switch ($this->getFieldSetting('datetime_type')) {
+    switch ($this->getFieldSetting('time_type')) {
       case DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT:
         // Date field properties.
         $value_date_format = DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT;

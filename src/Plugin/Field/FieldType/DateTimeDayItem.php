@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\date_time_day\DateDayComputed;
 use Drupal\date_time_day\DateTimeDayComputed;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
 /**
@@ -23,10 +24,10 @@ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
  *   list_class = "\Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayFieldItemList"
  * )
  */
-class DateTimeDayItem extends FieldItemBase {
+class DateTimeDayItem extends DateTimeItem {
 
   /**
-   * Values for the 'datetime_type' setting: store only a time, time & seconds.
+   * Values for the 'time_type' setting: store only a time, time & seconds.
    */
   const DATEDAY_TIME_DEFAULT_TYPE_FORMAT = 'time';
   const DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT = 'H:i';
@@ -38,7 +39,8 @@ class DateTimeDayItem extends FieldItemBase {
    */
   public static function defaultStorageSettings() {
     return [
-      'datetime_type' => 'time',
+      'datetime_type' => DateTimeItem::DATETIME_TYPE_DATE,
+      'time_type' => static::DATEDAY_TIME_DEFAULT_TYPE_FORMAT,
     ] + parent::defaultStorageSettings();
   }
 
@@ -46,14 +48,11 @@ class DateTimeDayItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
-    $properties['value'] = DataDefinition::create('datetime_iso8601')
-      ->setLabel(t('Date value'))
-      ->setRequired(TRUE);
+    $properties = parent::propertyDefinitions($field_definition);
 
-    $properties['date'] = DataDefinition::create('any')
-      ->setComputed(TRUE)
-      ->setClass(DateDayComputed::class)
-      ->setSetting('date source', 'value');
+    /** @var DataDefinition $date */
+    $date = $properties['date'];
+    $date->setClass(DateDayComputed::class);
 
     $properties['start_time_value'] = DataDefinition::create('string')
       ->setLabel(t('Start time value'))
@@ -84,18 +83,7 @@ class DateTimeDayItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
-    $schema = [
-      'columns' => [
-        'value' => [
-          'description' => 'The date value.',
-          'type' => 'varchar',
-          'length' => 20,
-        ],
-      ],
-      'indexes' => [
-        'value' => ['value'],
-      ],
-    ];
+    $schema = parent::schema($field_definition);
 
     $schema['columns']['start_time_value'] = [
       'description' => 'The start time value.',
@@ -115,19 +103,20 @@ class DateTimeDayItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public function storageSettingsForm(array &$form, FormStateInterface $form_state, $has_data) {
-    $element = [];
+    $element = parent::storageSettingsForm($form, $form_state, $has_data);
 
-    $element['datetime_type'] = [
+    $element['time_type'] = [
       '#type' => 'select',
-      '#title' => $this->t('Date type'),
-      '#description' => $this->t('Choose the type of date to create.'),
-      '#default_value' => $this->getSetting('datetime_type'),
+      '#title' => $this->t('Day type'),
+      '#description' => $this->t('Choose the type of time to create for the start and end time.'),
+      '#default_value' => $this->getSetting('time_type'),
       '#options' => [
         static::DATEDAY_TIME_DEFAULT_TYPE_FORMAT => $this->t('Start, end time of day'),
         static::DATEDAY_TIME_TYPE_SECONDS_FORMAT => $this->t('Start, end time of day with seconds'),
       ],
       '#disabled' => $has_data,
     ];
+
     return $element;
   }
 
@@ -135,20 +124,21 @@ class DateTimeDayItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
+    $values = parent::generateSampleValue($field_definition);
+
     $timestamp = microtime() - mt_rand(0, 86400 * 365);
     $start = $timestamp - 3600;
     $end = $start + 3600;
-    $type = $field_definition->getSetting('datetime_type');
-    if ($type == static::DATEDAY_TIME_DEFAULT_TYPE_FORMAT) {
-      $values['value'] = gmdate(DateTimeItemInterface::DATE_STORAGE_FORMAT, $timestamp);
+    $type = $field_definition->getSetting('time_type');
+    if ($type === static::DATEDAY_TIME_DEFAULT_TYPE_FORMAT) {
       $values['start_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT, $start);
       $values['end_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT, $end);
     }
-    if ($type == static::DATEDAY_TIME_TYPE_SECONDS_FORMAT) {
-      $values['value'] = gmdate(DateTimeItemInterface::DATE_STORAGE_FORMAT, $timestamp);
+    if ($type === static::DATEDAY_TIME_TYPE_SECONDS_FORMAT) {
       $values['start_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT, $start);
       $values['end_time_value'] = gmdate(static::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT, $end);
     }
+
     return $values;
   }
 
@@ -167,9 +157,6 @@ class DateTimeDayItem extends FieldItemBase {
    */
   public function onChange($property_name, $notify = TRUE) {
     // Enforce that the computed date is recalculated.
-    if ($property_name == 'value') {
-      $this->date = NULL;
-    }
     if ($property_name == 'start_time_value') {
       $this->start_time = NULL;
     }

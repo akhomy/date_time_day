@@ -134,7 +134,7 @@ class DateTimeDayFieldItemList extends DateTimeFieldItemList {
     if (!empty($default_value[0]['default_date_type']) || !empty($default_value[0]['default_start_time_type']) || !empty($default_value[0]['default_end_time_type'])) {
       // A default value should be in the format and timezone used for date
       // storage.
-      $storage_format = $definition->getSetting('datetime_type') == DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT ? DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT : DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT;
+      $storage_format = $definition->getSetting('time_type') === DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT ? DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT : DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT;
       $default_values = [[]];
       if (!empty($default_value[0]['default_date_type'])) {
         $date = new DrupalDateTime($default_value[0]['default_date'], DateTimeItemInterface::STORAGE_TIMEZONE);
