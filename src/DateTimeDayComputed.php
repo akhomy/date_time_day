@@ -7,6 +7,7 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedData;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
 /**
  * A computed property for times of date time day field items.
@@ -51,7 +52,7 @@ class DateTimeDayComputed extends TypedData {
       $value = "$value:00";
     }
     try {
-      $date = DrupalDateTime::createFromFormat($storage_format, $value);
+      $date = DrupalDateTime::createFromFormat($storage_format, $value, DateTimeItemInterface::STORAGE_TIMEZONE);
       if ($date instanceof DrupalDateTime && !$date->hasErrors()) {
         $this->date = $date;
       }
