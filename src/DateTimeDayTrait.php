@@ -18,14 +18,14 @@ trait DateTimeDayTrait {
     $time_separator = $this->getSetting('time_separator');
 
     foreach ($items as $delta => $item) {
-      if (!empty($item->start_time) && !empty($item->end_time)) {
-        $elements[$delta] = [
-          'date' => $this->buildDateWithIsoAttribute($item->date),
-          'day_separator' => ['#plain_text' => ' ' . $day_separator . ' '],
-          'start_time' => $this->buildTimeWithAttribute($item->start_time),
-          'time_separator' => ['#plain_text' => ' ' . $time_separator . ' '],
-          'end_time' => $this->buildTimeWithAttribute($item->end_time),
-        ];
+      $elements[$delta]['date'] = $this->buildDateWithIsoAttribute($item->date);
+      if (!empty($item->start_time)) {
+        $elements[$delta]['day_separator'] = ['#plain_text' => $day_separator];
+        $elements[$delta]['start_time'] = $this->buildTimeWithAttribute($item->start_time);
+        if (!empty($item->end_time)) {
+          $elements[$delta]['time_separator'] = ['#plain_text' => $time_separator];
+          $elements[$delta]['end_time'] = $this->buildTimeWithAttribute($item->end_time);
+        }
       }
     }
 
