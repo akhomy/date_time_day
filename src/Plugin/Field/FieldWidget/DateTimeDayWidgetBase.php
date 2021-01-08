@@ -154,18 +154,21 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
     if ($type === DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT && strlen($start_date) === 5) {
       $start_date = "$start_date:00";
     }
-    $start_date = DrupalDateTime::createFromFormat($storage_format, $start_date);
     $end_date = isset($element['end_time_value']['#value']['time']) ? $element['end_time_value']['#value']['time'] : $element['end_time_value']['#value'];
     if ($type === DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT && strlen($end_date) === 5) {
       $end_date = "$end_date:00";
     }
-    $end_date = DrupalDateTime::createFromFormat($storage_format, $end_date);
 
-    if ($start_date instanceof DrupalDateTime && $end_date instanceof DrupalDateTime) {
-      if ($start_date->getTimestamp() !== $end_date->getTimestamp()) {
-        $interval = $start_date->diff($end_date);
-        if ($interval->invert === 1) {
-          $form_state->setError($element, $this->t('The @title end date cannot be before the start date', ['@title' => $element['#title']]));
+    if (!empty($start_date) && !empty($end_date)) {
+      $start_date = DrupalDateTime::createFromFormat($storage_format, $start_date);
+      $end_date = DrupalDateTime::createFromFormat($storage_format, $end_date);
+
+      if ($start_date instanceof DrupalDateTime && $end_date instanceof DrupalDateTime) {
+        if ($start_date->getTimestamp() !== $end_date->getTimestamp()) {
+          $interval = $start_date->diff($end_date);
+          if ($interval->invert === 1) {
+            $form_state->setError($element, $this->t('The @title end date cannot be before the start date', ['@title' => $element['#title']]));
+          }
         }
       }
     }
