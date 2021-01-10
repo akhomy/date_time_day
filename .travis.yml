@@ -2,8 +2,12 @@
 # .travis.yml - Drupal 8 Travis CI Integration
 
 language: php
+dist: trusty
+sudo: required
+group: edge
 
-sudo: false
+services:
+  - mysql
 
 php:
   - '7.2'
@@ -13,7 +17,7 @@ env:
   global:
     - MODULE_NAME='date_time_day'
     - DRUPAL_REPO='https://git.drupalcode.org/project/drupal.git'
-    - DRUPAL_VERSION='8.7.x'
+    - DRUPAL_VERSION='8.9.x'
     - DRUSH_VERSION='9.7.*'
 
 # Cache Composer & Drush directories.
