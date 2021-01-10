@@ -3,14 +3,12 @@
 namespace Drupal\date_time_day\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldDefinitionInterface;
-use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\date_time_day\DateDayComputed;
 use Drupal\date_time_day\DateTimeDayComputed;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
-use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
 /**
  * Plugin implementation of the 'datetimeday' field type.
@@ -50,7 +48,7 @@ class DateTimeDayItem extends DateTimeItem {
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     $properties = parent::propertyDefinitions($field_definition);
 
-    /** @var DataDefinition $date */
+    /** @var \Drupal\Core\TypedData\DataDefinition $date */
     $date = $properties['date'];
     $date->setClass(DateDayComputed::class);
 
