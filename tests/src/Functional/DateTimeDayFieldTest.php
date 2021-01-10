@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\date_time_day\Functional;
 
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 use Drupal\Tests\datetime\Functional\DateTestBase;
 use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -66,7 +67,8 @@ class DateTimeDayFieldTest extends DateTestBase {
       $this->setSiteTimezone($timezone);
       $this->assertEquals($timezone, $this->config('system.date')->get('timezone.default'), 'Time zone set to ' . $timezone);
       // Ensure field is set to a date-only field.
-      $this->fieldStorage->setSetting('datetime_type', DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT);
+      $this->fieldStorage->setSetting('datetime_type', DateTimeItem::DATETIME_TYPE_DATE);
+      $this->fieldStorage->setSetting('time_type', DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT);
       $this->fieldStorage->save();
       // Set correct form widget type.
       EntityFormDisplay::load('entity_test.entity_test.default')
@@ -132,7 +134,8 @@ class DateTimeDayFieldTest extends DateTestBase {
       $this->setSiteTimezone('UTC');
       $this->assertEquals($timezone, $this->config('system.date')->get('timezone.default'), 'Time zone set to ' . $timezone);
       // Ensure field is set to a date-only field.
-      $this->fieldStorage->setSetting('datetime_type', DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT);
+      $this->fieldStorage->setSetting('datetime_type', DateTimeItem::DATETIME_TYPE_DATE);
+      $this->fieldStorage->setSetting('time_type', DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT);
       // Set correct form widget type.
       EntityFormDisplay::load('entity_test.entity_test.default')
         ->setComponent($field_name, ['type' => 'datetimeday_h_i_s_time'])
@@ -199,7 +202,8 @@ class DateTimeDayFieldTest extends DateTestBase {
       'entity_type' => 'node',
       'type' => 'datetimeday',
       'settings' => [
-        'datetime_type' => DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT,
+        'datetime_type' => DateTimeItem::DATETIME_TYPE_DATE,
+        'time_type' => DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT,
       ],
     ]);
     $field_storage->save();

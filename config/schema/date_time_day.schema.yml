@@ -8,6 +8,9 @@ field.storage_settings.datetimeday:
     datetime_type:
       type: string
       label: 'Date type'
+    time_type:
+      type: string
+      label: 'Time type'
 
 field.field_settings.datetimeday:
   type: field.field_settings.datetime

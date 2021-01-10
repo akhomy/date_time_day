@@ -5,6 +5,7 @@ namespace Drupal\Tests\date_time_day\Kernel;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Language\Language;
 use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 use Drupal\entity_test\Entity\EntityTest;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
@@ -61,7 +62,10 @@ class SeparatorsTranslationTest extends KernelTestBase {
       'field_name' => mb_strtolower($this->randomMachineName()),
       'entity_type' => 'entity_test',
       'type' => 'datetimeday',
-      'settings' => ['datetime_type' => DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT],
+      'settings' => [
+        'datetime_type' => DateTimeItem::DATETIME_TYPE_DATE,
+        'time_type' => DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT,
+      ],
     ]);
     $this->fieldStorage->save();
 
