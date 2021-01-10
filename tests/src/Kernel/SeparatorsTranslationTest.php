@@ -114,8 +114,8 @@ class SeparatorsTranslationTest extends KernelTestBase {
     $build = $display->build($entity);
     $output = $this->container->get('renderer')->renderRoot($build);
     $this->verbose($output);
-    $this->assertContains('D_UNTRANSLATED', (string) $output);
-    $this->assertContains('T_UNTRANSLATED', (string) $output);
+    $this->assertStringContainsString('D_UNTRANSLATED', (string) $output);
+    $this->assertStringContainsString('T_UNTRANSLATED', (string) $output);
 
     // Translate the separators.
     ConfigurableLanguage::createFromLangcode('nl')->save();
@@ -135,8 +135,8 @@ class SeparatorsTranslationTest extends KernelTestBase {
     $build = $display->build($entity);
     $output = $this->container->get('renderer')->renderRoot($build);
     $this->verbose($output);
-    $this->assertContains('DNL_TRANSLATED!', (string) $output);
-    $this->assertContains('TNL_TRANSLATED!', (string) $output);
+    $this->assertStringContainsString('DNL_TRANSLATED!', (string) $output);
+    $this->assertStringContainsString('TNL_TRANSLATED!', (string) $output);
   }
 
 }

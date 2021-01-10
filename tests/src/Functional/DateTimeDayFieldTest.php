@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\date_time_day\Functional;
 
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 use Drupal\Tests\datetime\Functional\DateTestBase;
 use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
@@ -46,6 +47,11 @@ class DateTimeDayFieldTest extends DateTestBase {
     'day_separator' => ',',
     'time_separator' => '-',
   ];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'classy';
 
   /**
    * {@inheritdoc}
@@ -99,7 +105,7 @@ class DateTimeDayFieldTest extends DateTestBase {
       $this->drupalPostForm(NULL, $edit, t('Save'));
       preg_match('|entity_test/manage/(\d+)|', $this->getUrl(), $match);
       $id = $match[1];
-      $this->assertText(t('entity_test @id has been created.', ['@id' => $id]));
+      $this->assertSession()->pageTextContains("entity_test $id has been created.");
       $this->assertRaw('2012-12-30');
       $this->assertRaw($start_time_value);
       $this->assertRaw($end_time_value);
@@ -153,7 +159,7 @@ class DateTimeDayFieldTest extends DateTestBase {
       // Build up dates in the UTC timezone.
       $date_value = '2012-12-30 00:00:00';
       $date = new DrupalDateTime($date_value, 'UTC');
-      $start_time_value = '22:10:10';
+      $start_time_value = '18:10:10';
       $end_time_value = '19:19:19';
       // Submit a valid date and ensure it is accepted.
       $date_format = DateFormat::load('html_date')->getPattern();
@@ -166,7 +172,7 @@ class DateTimeDayFieldTest extends DateTestBase {
       $this->drupalPostForm(NULL, $edit, t('Save'));
       preg_match('|entity_test/manage/(\d+)|', $this->getUrl(), $match);
       $id = $match[1];
-      $this->assertText(t('entity_test @id has been created.', ['@id' => $id]));
+      $this->assertSession()->pageTextContains("entity_test $id has been created.");
       $this->assertRaw('2012-12-30');
       $this->assertRaw($start_time_value);
       $this->assertRaw($end_time_value);
@@ -233,7 +239,7 @@ class DateTimeDayFieldTest extends DateTestBase {
     $this->drupalGet('admin/structure/types/manage/date_content/fields/node.date_content.' . $field_name . '/storage');
     $result = $this->xpath("//*[@id='edit-settings-datetime-type' and contains(@disabled, 'disabled')]");
     $this->assertEqual(count($result), 1, "Changing datetime setting is disabled.");
-    $this->assertText('There is data for this field in the database. The field settings can no longer be changed.');
+    $this->assertSession()->pageTextContains('There is data for this field in the database. The field settings can no longer be changed.');
   }
 
 }

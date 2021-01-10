@@ -137,7 +137,7 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
   }
 
   /**
-   * Validation callback to ensure that the end_time <= the end_time.
+   * Validation callback to ensure that the start_time <= the end_time.
    *
    * @param array $element
    *   An associative array containing the properties and children of the
