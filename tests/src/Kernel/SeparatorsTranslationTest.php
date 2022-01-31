@@ -57,7 +57,6 @@ class SeparatorsTranslationTest extends KernelTestBase {
     $this->installEntitySchema('entity_test');
     $this->installEntitySchema('user');
     $this->installConfig(['system']);
-    $this->installSchema('system', ['sequences', 'key_value']);
 
     // Add a date_time_day field.
     $this->fieldStorage = FieldStorageConfig::create([
