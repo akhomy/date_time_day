@@ -16,6 +16,8 @@
     <env name="SIMPLETEST_DB" value="sqlite://localhost/:memory:"/>
     <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /path/to/webroot/sites/simpletest/browser_output -->
     <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="/tmp"/>
+    <!-- To disable deprecation testing completely uncomment the next line. -->
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
   </php>
   <testsuites>
     <testsuite name="unit">
