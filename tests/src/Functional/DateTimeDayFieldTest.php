@@ -1,8 +1,9 @@
 <?php
 
+declare (strict_types = 1);
+
 namespace Drupal\Tests\date_time_day\Functional;
 
-use Drupal\Component\Render\FormattableMarkup;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 use Drupal\Tests\datetime\Functional\DateTestBase;
 use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
@@ -12,6 +13,7 @@ use Drupal\entity_test\Entity\EntityTest;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Tests date_time_day field functionality.
@@ -19,6 +21,8 @@ use Drupal\Core\Entity\Entity\EntityFormDisplay;
  * @group date_time_day
  */
 class DateTimeDayFieldTest extends DateTestBase {
+
+  use StringTranslationTrait;
 
   /**
    * Modules to enable.
@@ -63,9 +67,8 @@ class DateTimeDayFieldTest extends DateTestBase {
   /**
    * Test the default field type and widget.
    */
-  public function testDateTimeDayTypeDefaultWithWidgetField() {
+  public function testDateTimeDayTypeDefaultWithWidgetField(): void {
     $field_name = $this->fieldStorage->getName();
-    $field_label = $this->field->label();
     // Loop through defined timezones to test that date-only fields work at the
     // extremes.
     foreach (static::$timezones as $timezone) {
@@ -82,13 +85,18 @@ class DateTimeDayFieldTest extends DateTestBase {
         ->save();
       // Display creation form.
       $this->drupalGet('entity_test/add');
-      $this->assertFieldByName("{$field_name}[0][value][date]", '', 'Date element found.');
-      $this->assertFieldByName("{$field_name}[0][start_time_value]", '', 'Start time element found.');
-      $this->assertFieldByName("{$field_name}[0][end_time_value]", '', 'End time element found.');
-      $this->assertFieldByXPath('//*[@id="edit-' . $field_name . '-wrapper"]//label[contains(@class, "js-form-required")]', TRUE, 'Required markup found');
-      $this->assertFieldByXPath('//fieldset[@id="edit-' . $field_name . '-0"]/legend', $field_label, 'Fieldset and label found');
-      $this->assertFieldByXPath('//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]', NULL, 'ARIA described-by found');
-      $this->assertFieldByXPath('//div[@id="edit-' . $field_name . '-0--description"]', NULL, 'ARIA description found');
+
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][value][date]", '');
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][start_time_value]", '');
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][end_time_value]", '');
+      // @phpstan-ignore-next-line
+      $this->assertSession()->elementExists('xpath', '//*[@id="edit-' . $field_name . '-wrapper"]//label[contains(@class, "js-form-required")]');
+      // @phpstan-ignore-next-line
+      $this->assertSession()->elementExists('xpath', '//fieldset[@id="edit-' . $field_name . '-0"]/legend');
+      // @phpstan-ignore-next-line
+      $this->assertSession()->elementExists('xpath', '//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]');
+      // @phpstan-ignore-next-line
+      $this->assertSession()->elementExists('xpath', '//div[@id="edit-' . $field_name . '-0--description"]');
       // Build up dates in the UTC timezone.
       $date_value = '2012-12-30 00:00:00';
       $date = new DrupalDateTime($date_value, 'UTC');
@@ -102,35 +110,36 @@ class DateTimeDayFieldTest extends DateTestBase {
         "{$field_name}[0][start_time_value]" => $start_time_value,
         "{$field_name}[0][end_time_value]" => $end_time_value,
       ];
-      $this->drupalPostForm(NULL, $edit, t('Save'));
+      $this->submitForm($edit, 'Save');
+      $match = [];
       preg_match('|entity_test/manage/(\d+)|', $this->getUrl(), $match);
-      $id = $match[1];
+      $id = isset($match[1]) ? $match[1] : NULL;
       $this->assertSession()->pageTextContains("entity_test $id has been created.");
-      $this->assertRaw('2012-12-30');
-      $this->assertRaw($start_time_value);
-      $this->assertRaw($end_time_value);
+      $this->assertSession()->responseContains('2012-12-30');
+      $this->assertSession()->responseContains($start_time_value);
+      $this->assertSession()->responseContains($end_time_value);
       // Verify the date doesn't change when entity is edited through the form.
       $entity = EntityTest::load($id);
-      $this->assertEqual('2012-12-30', $entity->{$field_name}->value);
-      $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
-      $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
+      $this->assertEquals('2012-12-30', $entity->{$field_name}->value);
+      $this->assertEquals($start_time_value, $entity->{$field_name}->start_time_value);
+      $this->assertEquals($end_time_value, $entity->{$field_name}->end_time_value);
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], 'Save');
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], 'Save');
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], 'Save');
       $entity = EntityTest::load($id);
-      $this->assertEqual('2012-12-30', $entity->{$field_name}->value);
-      $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
-      $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
+      $this->assertEquals('2012-12-30', $entity->{$field_name}->value);
+      $this->assertEquals($start_time_value, $entity->{$field_name}->start_time_value);
+      $this->assertEquals($end_time_value, $entity->{$field_name}->end_time_value);
     }
   }
 
   /**
    * Test with seconds field type and widget.
    */
-  public function testDateTimeDayTypeSecondsWithWidgetField() {
+  public function testDateTimeDayTypeSecondsWithWidgetField(): void {
     $field_name = $this->fieldStorage->getName();
     $field_label = $this->field->label();
     // Loop through defined timezones to test that date-only fields work at the
@@ -149,13 +158,17 @@ class DateTimeDayFieldTest extends DateTestBase {
       $this->fieldStorage->save();
       // Display creation form.
       $this->drupalGet('entity_test/add');
-      $this->assertFieldByName("{$field_name}[0][value][date]", '', 'Date element found.');
-      $this->assertFieldByName("{$field_name}[0][start_time_value][time]", '', 'Start time element found.');
-      $this->assertFieldByName("{$field_name}[0][end_time_value][time]", '', 'End time element found.');
-      $this->assertFieldByXPath('//*[@id="edit-' . $field_name . '-wrapper"]//label[contains(@class, "js-form-required")]', TRUE, 'Required markup found');
-      $this->assertFieldByXPath('//fieldset[@id="edit-' . $field_name . '-0"]/legend', $field_label, 'Fieldset and label found');
-      $this->assertFieldByXPath('//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]', NULL, 'ARIA described-by found');
-      $this->assertFieldByXPath('//div[@id="edit-' . $field_name . '-0--description"]', NULL, 'ARIA description found');
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][value][date]", '');
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][start_time_value][time]", '');
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][end_time_value][time]", '');
+      // @phpstan-ignore-next-line
+      $this->assertSession()->elementExists('xpath', '//*[@id="edit-' . $field_name . '-wrapper"]//label[contains(@class, "js-form-required")]');
+      // @phpstan-ignore-next-line
+      $this->assertSession()->elementExists('xpath', '//fieldset[@id="edit-' . $field_name . '-0"]/legend', $field_label);
+      // @phpstan-ignore-next-line
+      $this->assertSession()->elementExists('xpath', '//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]');
+      // @phpstan-ignore-next-line
+      $this->assertSession()->elementExists('xpath', '//div[@id="edit-' . $field_name . '-0--description"]');
       // Build up dates in the UTC timezone.
       $date_value = '2012-12-30 00:00:00';
       $date = new DrupalDateTime($date_value, 'UTC');
@@ -169,35 +182,36 @@ class DateTimeDayFieldTest extends DateTestBase {
         "{$field_name}[0][start_time_value][time]" => $start_time_value,
         "{$field_name}[0][end_time_value][time]" => $end_time_value,
       ];
-      $this->drupalPostForm(NULL, $edit, t('Save'));
+      $this->submitForm($edit, 'Save');
+      $match = [];
       preg_match('|entity_test/manage/(\d+)|', $this->getUrl(), $match);
-      $id = $match[1];
+      $id = isset($match[1]) ? $match[1] : NULL;
       $this->assertSession()->pageTextContains("entity_test $id has been created.");
-      $this->assertRaw('2012-12-30');
-      $this->assertRaw($start_time_value);
-      $this->assertRaw($end_time_value);
+      $this->assertSession()->responseContains('2012-12-30');
+      $this->assertSession()->responseContains($start_time_value);
+      $this->assertSession()->responseContains($end_time_value);
       // Verify the date doesn't change when entity is edited through the form.
       $entity = EntityTest::load($id);
-      $this->assertEqual('2012-12-30', $entity->{$field_name}->value);
-      $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
-      $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
+      $this->assertEquals('2012-12-30', $entity->{$field_name}->value);
+      $this->assertEquals($start_time_value, $entity->{$field_name}->start_time_value);
+      $this->assertEquals($end_time_value, $entity->{$field_name}->end_time_value);
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], 'Save');
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], 'Save');
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], 'Save');
       $entity = EntityTest::load($id);
-      $this->assertEqual('2012-12-30', $entity->{$field_name}->value);
-      $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
-      $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
+      $this->assertEquals('2012-12-30', $entity->{$field_name}->value);
+      $this->assertEquals($start_time_value, $entity->{$field_name}->start_time_value);
+      $this->assertEquals($end_time_value, $entity->{$field_name}->end_time_value);
     }
   }
 
   /**
    * Tests that field storage setting form is disabled if field has data.
    */
-  public function testDateStorageSettings() {
+  public function testDateStorageSettings(): void {
     // Create a test content type.
     $this->drupalCreateContentType(['type' => 'date_content']);
 
@@ -235,10 +249,11 @@ class DateTimeDayFieldTest extends DateTestBase {
       $field_name . '[0][start_time_value]' => '10:00',
       $field_name . '[0][end_time_value]' => '19:00',
     ];
-    $this->drupalPostForm('node/add/date_content', $edit, t('Save'));
+    $this->drupalGet('node/add/date_content');
+    $this->submitForm($edit, 'Save');
     $this->drupalGet('admin/structure/types/manage/date_content/fields/node.date_content.' . $field_name . '/storage');
     $result = $this->xpath("//*[@id='edit-settings-datetime-type' and contains(@disabled, 'disabled')]");
-    $this->assertEqual(count($result), 1, "Changing datetime setting is disabled.");
+    $this->assertEquals(count($result), 1, "Changing datetime setting is disabled.");
     $this->assertSession()->pageTextContains('There is data for this field in the database. The field settings can no longer be changed.');
   }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\date_time_day\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -52,8 +54,8 @@ class DateTimeDayDefaultFormatter extends DateTimeDefaultFormatter {
 
     $form['time_format_type'] = [
       '#type' => 'select',
-      '#title' => t('Time format'),
-      '#description' => t("Choose a format for displaying the time. Be sure to set a format appropriate for the field, i.e. omitting date for a field that only has a time."),
+      '#title' => $this->t('Time format'),
+      '#description' => $this->t("Choose a format for displaying the time. Be sure to set a format appropriate for the field, i.e. omitting date for a field that only has a time."),
       '#options' => $form['format_type']['#options'],
       '#default_value' => $this->getSetting('time_format_type'),
     ];
@@ -80,18 +82,18 @@ class DateTimeDayDefaultFormatter extends DateTimeDefaultFormatter {
    */
   public function settingsSummary() {
     if ($override = $this->getSetting('timezone_override')) {
-      $summary[] = $this->t('Time zone: @timezone', ['@timezone' => $override]);
+      $summary[] = (string) $this->t('Time zone: @timezone', ['@timezone' => $override]);
     }
 
     $date = new DrupalDateTime();
-    $summary[] = t('Day format: @display', ['@display' => $this->formatDate($date)]);
-    $summary[] = t('Time format: @display', ['@display' => $this->formatTime($date)]);
+    $summary[] = (string) $this->t('Day format: @display', ['@display' => $this->formatDate($date)]);
+    $summary[] = (string) $this->t('Time format: @display', ['@display' => $this->formatTime($date)]);
     if ($day_separator = $this->getSetting('day_separator')) {
-      $summary[] = $this->t('Day separator: %day_separator', ['%day_separator' => $day_separator]);
+      $summary[] = (string) $this->t('Day separator: %day_separator', ['%day_separator' => $day_separator]);
     }
 
     if ($time_separator = $this->getSetting('time_separator')) {
-      $summary[] = $this->t('Time separator: %time_separator', ['%time_separator' => $time_separator]);
+      $summary[] = (string) $this->t('Time separator: %time_separator', ['%time_separator' => $time_separator]);
     }
 
     return $summary;
@@ -106,7 +108,7 @@ class DateTimeDayDefaultFormatter extends DateTimeDefaultFormatter {
    * @return string
    *   The formatted time string.
    */
-  protected function formatTime(DrupalDateTime $date) {
+  protected function formatTime(DrupalDateTime $date): string {
     $format_type = $this->getSetting('time_format_type');
     $timezone = $this->getSetting('timezone_override') ?: $date->getTimezone()->getName();
     return $this->dateFormatter->format($date->getTimestamp(), $format_type, '', $timezone != '' ? $timezone : NULL);
@@ -121,7 +123,7 @@ class DateTimeDayDefaultFormatter extends DateTimeDefaultFormatter {
    * @return array
    *   A render array.
    */
-  protected function buildTimeWithAttribute(DrupalDateTime $dateTime) {
+  protected function buildTimeWithAttribute(DrupalDateTime $dateTime): array {
     $build = [
       '#theme' => 'time',
       '#text' => $this->formatTime($dateTime),

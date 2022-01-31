@@ -17,6 +17,9 @@
         "role": "Maintainer"
     }
   ],
+  "require": {
+    "php": ">=7.2"
+  },
   "minimum-stability": "dev",
   "support": {
     "issues": "https://www.drupal.org/project/issues/date_time_day",

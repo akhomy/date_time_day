@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\date_time_day\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
@@ -26,6 +28,7 @@ class DateTimeDaySecondsWidget extends DateTimeDayWidgetBase {
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
     // Identify the type of date and time elements to use.
+    $time_date_type = 'none';
     switch ($this->getFieldSetting('time_type')) {
       case DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT:
       case DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT:
@@ -36,7 +39,6 @@ class DateTimeDaySecondsWidget extends DateTimeDayWidgetBase {
         $value_time_type = 'none';
         // Time fields properties.
         $time_date_format = '';
-        $time_date_type = 'none';
         $time_format = DateTimeDayItem::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT;
         $time_type = 'time';
         break;

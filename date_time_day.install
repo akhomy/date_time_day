@@ -5,15 +5,17 @@
  * Update hooks for the Date time day module.
  */
 
+declare(strict_types = 1);
+
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Update the changed field storage settings for existing fields.
  */
-function date_time_day_update_8106(&$sandbox) {
+function date_time_day_update_8106(): void {
   $storage_configs = FieldStorageConfig::loadMultiple();
-  foreach ($storage_configs as $storage_name => $storage_config) {
+  foreach ($storage_configs as $storage_config) {
     if ($storage_config->getType() !== 'datetimeday') {
       continue;
     }

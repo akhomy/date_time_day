@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\date_time_day\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldDefinitionInterface;
@@ -124,7 +126,7 @@ class DateTimeDayItem extends DateTimeItem {
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
     $values = parent::generateSampleValue($field_definition);
 
-    $timestamp = microtime() - mt_rand(0, 86400 * 365);
+    $timestamp = (int) microtime() - (int) mt_rand(0, 86400 * 365);
     $start = $timestamp - 3600;
     $end = $start + 3600;
     $type = $field_definition->getSetting('time_type');
@@ -152,6 +154,8 @@ class DateTimeDayItem extends DateTimeItem {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-ignore-next-line
    */
   public function onChange($property_name, $notify = TRUE) {
     // Enforce that the computed date is recalculated.

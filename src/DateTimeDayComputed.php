@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\date_time_day;
 
 use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
@@ -20,14 +22,14 @@ class DateTimeDayComputed extends TypedData {
   /**
    * Cached computed date.
    *
-   * @var \DateTime|null
+   * @var \Drupal\Core\Datetime\DrupalDateTime|null
    */
   protected $date = NULL;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(DataDefinitionInterface $definition, $name = NULL, TypedDataInterface $parent = NULL) {
+  public function __construct(DataDefinitionInterface $definition, $name = NULL, ?TypedDataInterface $parent = NULL) {
     parent::__construct($definition, $name, $parent);
     if (!$definition->getSetting('date source')) {
       throw new \InvalidArgumentException("The definition's 'date source' key has to specify the name of the date time property to be computed.");
@@ -37,7 +39,7 @@ class DateTimeDayComputed extends TypedData {
   /**
    * {@inheritdoc}
    */
-  public function getValue($langcode = NULL) {
+  public function getValue(string $langcode = NULL) {
     if ($this->date !== NULL) {
       return $this->date;
     }
@@ -48,7 +50,7 @@ class DateTimeDayComputed extends TypedData {
     $datetime_type = $item->getFieldDefinition()->getSetting('time_type');
     $storage_format = $datetime_type === DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT ? DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT : DateTimeDayItem::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT;
     // Fix time with seconds in incorrect widget.
-    if ($datetime_type === DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT && strlen($value) === 5) {
+    if ($value && $datetime_type === DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT && strlen($value) === 5) {
       $value = "$value:00";
     }
     try {
@@ -65,6 +67,8 @@ class DateTimeDayComputed extends TypedData {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-ignore-next-line
    */
   public function setValue($value, $notify = TRUE) {
     $this->date = $value;

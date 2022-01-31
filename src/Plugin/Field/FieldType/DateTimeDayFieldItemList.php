@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\date_time_day\Plugin\Field\FieldType;
 
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -74,28 +76,43 @@ class DateTimeDayFieldItemList extends DateTimeFieldItemList {
 
       return $element;
     }
+    return [];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function defaultValuesFormValidate(array $element, array &$form, FormStateInterface $form_state) {
+  public function defaultValuesFormValidate(array $element, array &$form, FormStateInterface $form_state): void {
     if ($form_state->getValue(['default_value_input', 'default_date_type']) == static::DEFAULT_VALUE_CUSTOM) {
-      $is_strtotime = @strtotime($form_state->getValue(['default_value_input', 'default_date']));
+      $is_strtotime = @strtotime($form_state->getValue([
+        'default_value_input',
+        'default_date',
+      ]));
       if (!$is_strtotime) {
         $form_state->setErrorByName('default_value_input][default_date', $this->t('The relative default date value entered is invalid.'));
       }
     }
 
-    if ($form_state->getValue(['default_value_input', 'default_start_time_type']) == static::DEFAULT_VALUE_CUSTOM) {
-      $is_strtotime = @strtotime($form_state->getValue(['default_value_input', 'default_start_time']));
+    if (
+      $form_state->getValue([
+        'default_value_input',
+        'default_start_time_type',
+      ]) == static::DEFAULT_VALUE_CUSTOM
+    ) {
+      $is_strtotime = @strtotime($form_state->getValue([
+        'default_value_input',
+        'default_start_time',
+      ]));
       if (!$is_strtotime) {
         $form_state->setErrorByName('default_value_input][default_start_time', $this->t('The relative default start time value entered is invalid.'));
       }
     }
 
     if ($form_state->getValue(['default_value_input', 'default_end_time_type']) == static::DEFAULT_VALUE_CUSTOM) {
-      $is_strtotime = @strtotime($form_state->getValue(['default_value_input', 'default_end_time']));
+      $is_strtotime = @strtotime($form_state->getValue([
+        'default_value_input',
+        'default_end_time',
+      ]));
       if (!$is_strtotime) {
         $form_state->setErrorByName('default_value_input][default_end_time', $this->t('The relative default end time value entered is invalid.'));
       }
@@ -106,14 +123,39 @@ class DateTimeDayFieldItemList extends DateTimeFieldItemList {
    * {@inheritdoc}
    */
   public function defaultValuesFormSubmit(array $element, array &$form, FormStateInterface $form_state) {
-    if ($form_state->getValue(['default_value_input', 'default_date_type']) || $form_state->getValue(['default_value_input', 'default_end_date_type'])) {
-      if ($form_state->getValue(['default_value_input', 'default_date_type']) == static::DEFAULT_VALUE_NOW) {
+    if (
+      $form_state->getValue([
+        'default_value_input',
+        'default_date_type',
+      ])
+      ||
+      $form_state->getValue([
+        'default_value_input',
+        'default_end_date_type',
+      ])
+    ) {
+      if (
+        $form_state->getValue([
+          'default_value_input',
+          'default_date_type',
+        ]) == static::DEFAULT_VALUE_NOW
+      ) {
         $form_state->setValueForElement($element['default_date'], static::DEFAULT_VALUE_NOW);
       }
-      if ($form_state->getValue(['default_value_input', 'default_start_time_type']) == static::DEFAULT_VALUE_NOW) {
+      if (
+        $form_state->getValue([
+          'default_value_input',
+          'default_start_time_type',
+        ]) == static::DEFAULT_VALUE_NOW
+      ) {
         $form_state->setValueForElement($element['default_start_time'], static::DEFAULT_VALUE_NOW);
       }
-      if ($form_state->getValue(['default_value_input', 'default_end_time_type']) == static::DEFAULT_VALUE_NOW) {
+      if (
+        $form_state->getValue([
+          'default_value_input',
+          'default_end_time_type',
+        ]) == static::DEFAULT_VALUE_NOW
+      ) {
         $form_state->setValueForElement($element['default_end_time'], static::DEFAULT_VALUE_NOW);
       }
       return [$form_state->getValue('default_value_input')];

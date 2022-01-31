@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\date_time_day\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
@@ -55,10 +57,13 @@ class DateTimeDayDefaultWidget extends DateTimeDayWidgetBase {
       '#title' => $this->t('Start time'),
       '#type' => 'textfield',
       '#size' => 12,
-      '#attributes' => ['pattern' => '([01]?[0-9]{2}|2[0-3]):[0-5][0-9]', 'title' => 'hh:mm'],
+      '#attributes' => [
+        'pattern' => '([01]?[0-9]{2}|2[0-3]):[0-5][0-9]',
+        'title' => 'hh:mm',
+      ],
     ];
     if ($items[$delta]->start_time) {
-      /** @var \Drupal\Core\Datetime\DrupalDateTime $start_date */
+      /** @var \Drupal\Core\Datetime\DrupalDateTime $start_time */
       $start_time = $items[$delta]->start_time;
       $element['start_time_value']['#default_value'] = $start_time->format($value_date_format);
     }
@@ -67,10 +72,13 @@ class DateTimeDayDefaultWidget extends DateTimeDayWidgetBase {
       '#title' => $this->t('End time'),
       '#type' => 'textfield',
       '#size' => 12,
-      '#attributes' => ['pattern' => '([01]?[0-9]{2}|2[0-3]):[0-5][0-9]', 'title' => 'hh:mm'],
+      '#attributes' => [
+        'pattern' => '([01]?[0-9]{2}|2[0-3]):[0-5][0-9]',
+        'title' => 'hh:mm',
+      ],
     ];
     if ($items[$delta]->end_time) {
-      /** @var \Drupal\Core\Datetime\DrupalDateTime $end_date */
+      /** @var \Drupal\Core\Datetime\DrupalDateTime $end_time */
       $end_time = $items[$delta]->end_time;
       $element['end_time_value']['#default_value'] = $end_time->format($value_date_format);
     }

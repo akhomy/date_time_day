@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\date_time_day\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -40,13 +42,13 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
     }
 
     if ($items[$delta]->start_time) {
-      /** @var \Drupal\Core\Datetime\DrupalDateTime $start_date */
+      /** @var \Drupal\Core\Datetime\DrupalDateTime $start_time */
       $start_time = $items[$delta]->start_time;
       $element['start_time_value']['#default_value'] = $this->createDateTimeDayDefaultValue($start_time, $element['start_time_value']['#date_timezone']);
     }
 
     if ($items[$delta]->end_time) {
-      /** @var \Drupal\Core\Datetime\DrupalDateTime $end_date */
+      /** @var \Drupal\Core\Datetime\DrupalDateTime $end_time */
       $end_time = $items[$delta]->end_time;
       $element['end_time_value']['#default_value'] = $this->createDateTimeDayDefaultValue($end_time, $element['end_time_value']['#date_timezone']);
     }
@@ -131,7 +133,7 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
    * @return \Drupal\Core\Datetime\DrupalDateTime
    *   A date object for use as a default value in a field widget.
    */
-  protected function createDateTimeDayDefaultValue(DrupalDateTime $date, $timezone) {
+  protected function createDateTimeDayDefaultValue(DrupalDateTime $date, string $timezone): DrupalDateTime {
     $date->setTimezone(new \DateTimeZone($timezone));
     return $date;
   }
@@ -147,7 +149,7 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
    * @param array $complete_form
    *   The complete form structure.
    */
-  public function validateStartEnd(array &$element, FormStateInterface $form_state, array &$complete_form) {
+  public function validateStartEnd(array &$element, FormStateInterface $form_state, array &$complete_form): void {
     $type = $this->getFieldSetting('time_type');
     $start_date = isset($element['start_time_value']['#value']['time']) ? $element['start_time_value']['#value']['time'] : $element['start_time_value']['#value'];
     $storage_format = $type === DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT ? DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT : DateTimeDayItem::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT;
@@ -163,12 +165,10 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
       $start_date = DrupalDateTime::createFromFormat($storage_format, $start_date);
       $end_date = DrupalDateTime::createFromFormat($storage_format, $end_date);
 
-      if ($start_date instanceof DrupalDateTime && $end_date instanceof DrupalDateTime) {
-        if ($start_date->getTimestamp() !== $end_date->getTimestamp()) {
-          $interval = $start_date->diff($end_date);
-          if ($interval->invert === 1) {
-            $form_state->setError($element, $this->t('The @title end date cannot be before the start date', ['@title' => $element['#title']]));
-          }
+      if ($start_date->getTimestamp() !== $end_date->getTimestamp()) {
+        $interval = $start_date->diff($end_date);
+        if ($interval->invert === 1) {
+          $form_state->setError($element, $this->t('The @title end date cannot be before the start date', ['@title' => $element['#title']]));
         }
       }
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\date_time_day;
 
 use Drupal\Core\Field\FieldItemListInterface;

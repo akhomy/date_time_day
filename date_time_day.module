@@ -2,15 +2,17 @@
 
 /**
  * @file
- * Main module file.
+ * Main date_time_day module file.
  */
+
+declare (strict_types = 1);
 
 use Drupal\Core\Url;
 
 /**
  * Implements hook_help().
  */
-function date_time_day_help($route_name) {
+function date_time_day_help(string $route_name): string {
   switch ($route_name) {
     case 'help.page.date_time_day':
       $output = '';
@@ -25,4 +27,5 @@ function date_time_day_help($route_name) {
       $output .= '</dl>';
       return $output;
   }
+  return '';
 }

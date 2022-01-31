@@ -1,5 +1,7 @@
 <?php
 
+declare (strict_types = 1);
+
 namespace Drupal\Tests\date_time_day\Kernel;
 
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
@@ -49,7 +51,7 @@ class SeparatorsTranslationTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->installEntitySchema('entity_test');
@@ -98,7 +100,7 @@ class SeparatorsTranslationTest extends KernelTestBase {
   /**
    * Tests the translation of the date_time_day separators.
    */
-  public function testSeparatorsTranslation() {
+  public function testSeparatorsTranslation(): void {
     // Create an entity.
     $entity = EntityTest::create([
       'name' => $this->randomString(),
@@ -113,7 +115,7 @@ class SeparatorsTranslationTest extends KernelTestBase {
     $display = EntityViewDisplay::collectRenderDisplay($entity, 'default');
     $build = $display->build($entity);
     $output = $this->container->get('renderer')->renderRoot($build);
-    $this->verbose($output);
+    dump($output);
     $this->assertStringContainsString('D_UNTRANSLATED', (string) $output);
     $this->assertStringContainsString('T_UNTRANSLATED', (string) $output);
 
@@ -134,7 +136,7 @@ class SeparatorsTranslationTest extends KernelTestBase {
     $display = EntityViewDisplay::collectRenderDisplay($entity, 'default');
     $build = $display->build($entity);
     $output = $this->container->get('renderer')->renderRoot($build);
-    $this->verbose($output);
+    dump($output);
     $this->assertStringContainsString('DNL_TRANSLATED!', (string) $output);
     $this->assertStringContainsString('TNL_TRANSLATED!', (string) $output);
   }

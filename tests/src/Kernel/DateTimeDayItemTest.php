@@ -1,5 +1,7 @@
 <?php
 
+declare (strict_types = 1);
+
 namespace Drupal\Tests\date_time_day\Kernel;
 
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
@@ -42,7 +44,7 @@ class DateTimeDayItemTest extends FieldKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Add a date_time_day field.
@@ -86,7 +88,7 @@ class DateTimeDayItemTest extends FieldKernelTestBase {
   /**
    * Tests the field configured for time-only.
    */
-  public function testDateDayTimeOnly() {
+  public function testDateDayTimeOnly(): void {
     $this->fieldStorage->setSetting('datetime_type', DateTimeItem::DATETIME_TYPE_DATE);
     $this->fieldStorage->setSetting('time_type', DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT);
     $field_name = $this->fieldStorage->getName();

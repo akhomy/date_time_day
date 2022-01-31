@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\date_time_day;
 
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -19,14 +21,14 @@ class DateDayComputed extends TypedData {
   /**
    * Cached computed date.
    *
-   * @var \DateTime|null
+   * @var \Drupal\Core\Datetime\DrupalDateTime|null
    */
   protected $date = NULL;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(DataDefinitionInterface $definition, $name = NULL, TypedDataInterface $parent = NULL) {
+  public function __construct(DataDefinitionInterface $definition, $name = NULL, ?TypedDataInterface $parent = NULL) {
     parent::__construct($definition, $name, $parent);
     if (!$definition->getSetting('date source')) {
       throw new \InvalidArgumentException("The definition's 'date source' key has to specify the name of the date property to be computed.");
@@ -36,7 +38,7 @@ class DateDayComputed extends TypedData {
   /**
    * {@inheritdoc}
    */
-  public function getValue($langcode = NULL) {
+  public function getValue(string $langcode = NULL) {
     if ($this->date !== NULL) {
       return $this->date;
     }
@@ -67,6 +69,8 @@ class DateDayComputed extends TypedData {
 
   /**
    * {@inheritdoc}
+   *
+   * @phpstan-ignore-next-line
    */
   public function setValue($value, $notify = TRUE) {
     $this->date = $value;
