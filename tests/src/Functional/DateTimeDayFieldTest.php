@@ -29,7 +29,7 @@ class DateTimeDayFieldTest extends DateTestBase {
    *
    * @var array
    */
-  public static $modules = ['date_time_day'];
+  protected static $modules = ['date_time_day'];
 
   /**
    * An array of timezone extremes to test.

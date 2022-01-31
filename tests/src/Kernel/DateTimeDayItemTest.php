@@ -36,7 +36,7 @@ class DateTimeDayItemTest extends FieldKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'datetime',
     'date_time_day',
   ];

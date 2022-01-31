@@ -38,7 +38,7 @@ class SeparatorsTranslationTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'datetime',
     'date_time_day',
     'entity_test',
