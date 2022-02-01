@@ -90,8 +90,6 @@ jobs:
           vendor/bin/drush si minimal --db-url=sqlite://sites/default/files/db.sqlite --yes
           cp modules/contrib/date_time_day/phpunit.xml.dist core/phpunit.xml
           ./vendor/bin/phpunit --configuration core/phpunit.xml modules/contrib/date_time_day
-        env:
-          SIMPLETEST_BASE_URL: "http://localhost:8888"
 
       - name: Run PHPStan
         run: |
