@@ -15,10 +15,7 @@ jobs:
       matrix:
         php-versions: ['7.3', '7.4', '8.0']
         drupal-core: ['9.2.x']
-        include:
-          # Extra run to also test on latest Drupal 8 and PHP 7.2.
-          - php-versions: '7.2'
-            drupal-core: '8.9.x'
+
     steps:
       - run: echo "${{ env.extensions }}"
       - name: Checkout Drupal core
