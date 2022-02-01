@@ -89,13 +89,9 @@ class DateTimeDayFieldTest extends DateTestBase {
       $this->assertSession()->fieldValueEquals("{$field_name}[0][value][date]", '');
       $this->assertSession()->fieldValueEquals("{$field_name}[0][start_time_value]", '');
       $this->assertSession()->fieldValueEquals("{$field_name}[0][end_time_value]", '');
-      // @phpstan-ignore-next-line
       $this->assertSession()->elementExists('xpath', '//*[@id="edit-' . $field_name . '-wrapper"]//label[contains(@class, "js-form-required")]');
-      // @phpstan-ignore-next-line
       $this->assertSession()->elementExists('xpath', '//fieldset[@id="edit-' . $field_name . '-0"]/legend');
-      // @phpstan-ignore-next-line
       $this->assertSession()->elementExists('xpath', '//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]');
-      // @phpstan-ignore-next-line
       $this->assertSession()->elementExists('xpath', '//div[@id="edit-' . $field_name . '-0--description"]');
       // Build up dates in the UTC timezone.
       $date_value = '2012-12-30 00:00:00';
@@ -161,13 +157,9 @@ class DateTimeDayFieldTest extends DateTestBase {
       $this->assertSession()->fieldValueEquals("{$field_name}[0][value][date]", '');
       $this->assertSession()->fieldValueEquals("{$field_name}[0][start_time_value][time]", '');
       $this->assertSession()->fieldValueEquals("{$field_name}[0][end_time_value][time]", '');
-      // @phpstan-ignore-next-line
       $this->assertSession()->elementExists('xpath', '//*[@id="edit-' . $field_name . '-wrapper"]//label[contains(@class, "js-form-required")]');
-      // @phpstan-ignore-next-line
-      $this->assertSession()->elementExists('xpath', '//fieldset[@id="edit-' . $field_name . '-0"]/legend', $field_label);
-      // @phpstan-ignore-next-line
+      $this->assertSession()->elementExists('xpath', '//fieldset[@id="edit-' . $field_name . '-0"]/legend');
       $this->assertSession()->elementExists('xpath', '//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]');
-      // @phpstan-ignore-next-line
       $this->assertSession()->elementExists('xpath', '//div[@id="edit-' . $field_name . '-0--description"]');
       // Build up dates in the UTC timezone.
       $date_value = '2012-12-30 00:00:00';
