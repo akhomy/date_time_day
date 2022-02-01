@@ -91,8 +91,8 @@ jobs:
           cp modules/contrib/date_time_day/phpunit.xml.dist core/phpunit.xml
           ./vendor/bin/phpunit --configuration core/phpunit.xml modules/contrib/date_time_day
         env:
-          SIMPLETEST_BASE_URL: "http://localhost:8080"
-          SIMPLETEST_DB: "sqlite://localhost/:memory:"
+          SIMPLETEST_BASE_URL: "http://localhost:8888"
+          SIMPLETEST_DB: "sqlite://sites/default/files/db.sqlite"
           BROWSERTEST_OUTPUT_DIRECTORY: "/tmp"
 
       - name: Run PHPStan
