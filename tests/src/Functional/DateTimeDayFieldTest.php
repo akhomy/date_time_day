@@ -10,8 +10,6 @@ use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Datetime\Entity\DateFormat;
 use Drupal\entity_test\Entity\EntityTest;
-use Drupal\field\Entity\FieldConfig;
-use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
@@ -137,7 +135,6 @@ class DateTimeDayFieldTest extends DateTestBase {
    */
   public function testDateTimeDayTypeSecondsWithWidgetField(): void {
     $field_name = $this->fieldStorage->getName();
-    $field_label = $this->field->label();
     // Loop through defined timezones to test that date-only fields work at the
     // extremes.
     foreach (static::$timezones as $timezone) {
