@@ -92,7 +92,6 @@ jobs:
           ./vendor/bin/phpunit --configuration core/phpunit.xml modules/contrib/date_time_day
         env:
           SIMPLETEST_BASE_URL: "http://localhost:8888"
-          SIMPLETEST_DB: "sqlite://sites/default/files/db.sqlite"
           BROWSERTEST_OUTPUT_DIRECTORY: "/tmp"
 
       - name: Run PHPStan
