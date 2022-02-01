@@ -1,3 +1,5 @@
+[![Tests](https://github.com/akhomy/date_time_day/actions/workflows/testing.yml/badge.svg)](https://github.com/akhomy/date_time_day/actions/workflows/testing.yml)
+
 CONTENTS OF THIS FILE
 ---------------------
 
