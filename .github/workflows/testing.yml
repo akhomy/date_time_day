@@ -100,7 +100,7 @@ jobs:
       - name: Install date_time_day module
         run: |
           composer config repositories.date_time_day vcs https://github.com/akhomy/date_time_day
-          composer require drupal/date_time_day:2.0.x
+          composer require drupal/date_time_day:2.0.x-dev
 
 
       - name: Run PHPUnit
