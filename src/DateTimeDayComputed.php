@@ -45,6 +45,12 @@ class DateTimeDayComputed extends TypedData {
     /** @var \Drupal\Core\Field\FieldItemInterface $item */
     $item = $this->getParent();
     $value = $item->{($this->definition->getSetting('date source'))};
+
+    // A date cannot be created from a NULL value.
+    if (empty($value) || !is_string($value)) {
+      return NULL;
+    }
+
     $datetime_type = $item->getFieldDefinition()->getSetting('time_type');
     $storage_format = $datetime_type === DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT ? DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT : DateTimeDayItem::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT;
     // Fix time with seconds in incorrect widget.

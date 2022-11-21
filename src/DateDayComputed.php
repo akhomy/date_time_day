@@ -45,6 +45,11 @@ class DateDayComputed extends TypedData {
     $item = $this->getParent();
     $value = $item->{($this->definition->getSetting('date source'))};
 
+    // A date cannot be created from a NULL value.
+    if (empty($value) || !is_string($value)) {
+      return NULL;
+    }
+
     $storage_format = DateTimeItemInterface::DATE_STORAGE_FORMAT;
     try {
       $date = DrupalDateTime::createFromFormat($storage_format, $value, DateTimeItemInterface::STORAGE_TIMEZONE);
