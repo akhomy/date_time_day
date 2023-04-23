@@ -151,12 +151,12 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
    */
   public function validateStartEnd(array &$element, FormStateInterface $form_state, array &$complete_form): void {
     $type = $this->getFieldSetting('time_type');
-    $start_date = isset($element['start_time_value']['#value']['time']) ? $element['start_time_value']['#value']['time'] : $element['start_time_value']['#value'];
+    $start_date = $element['start_time_value']['#value']['time'] ?? $element['start_time_value']['#value'];
     $storage_format = $type === DateTimeDayItem::DATEDAY_TIME_DEFAULT_TYPE_FORMAT ? DateTimeDayItem::DATE_TIME_DAY_H_I_FORMAT_STORAGE_FORMAT : DateTimeDayItem::DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT;
     if ($type === DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT && strlen($start_date) === 5) {
       $start_date = "$start_date:00";
     }
-    $end_date = isset($element['end_time_value']['#value']['time']) ? $element['end_time_value']['#value']['time'] : $element['end_time_value']['#value'];
+    $end_date = $element['end_time_value']['#value']['time'] ?? $element['end_time_value']['#value'];
     if ($type === DateTimeDayItem::DATEDAY_TIME_TYPE_SECONDS_FORMAT && strlen($end_date) === 5) {
       $end_date = "$end_date:00";
     }

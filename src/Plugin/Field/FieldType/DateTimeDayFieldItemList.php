@@ -30,7 +30,7 @@ class DateTimeDayFieldItemList extends DateTimeFieldItemList {
         '#type' => 'select',
         '#title' => $this->t('Default start time type'),
         '#description' => $this->t('Set a default value for the start time.'),
-        '#default_value' => isset($default_value[0]['default_start_time_type']) ? $default_value[0]['default_start_time_type'] : '',
+        '#default_value' => $default_value[0]['default_start_time_type'] ?? '',
         '#options' => [
           static::DEFAULT_VALUE_NOW => $this->t('Current date'),
           static::DEFAULT_VALUE_CUSTOM => $this->t('Relative date'),
@@ -54,7 +54,7 @@ class DateTimeDayFieldItemList extends DateTimeFieldItemList {
         '#type' => 'select',
         '#title' => $this->t('Default end time type'),
         '#description' => $this->t('Set a default value for the end time.'),
-        '#default_value' => isset($default_value[0]['default_end_time_type']) ? $default_value[0]['default_end_time_type'] : '',
+        '#default_value' => $default_value[0]['default_end_time_type'] ?? '',
         '#options' => [
           static::DEFAULT_VALUE_NOW => $this->t('Current date'),
           static::DEFAULT_VALUE_CUSTOM => $this->t('Relative date'),

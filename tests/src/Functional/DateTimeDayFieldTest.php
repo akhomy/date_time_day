@@ -107,7 +107,7 @@ class DateTimeDayFieldTest extends DateTestBase {
       $this->submitForm($edit, 'Save');
       $match = [];
       preg_match('|entity_test/manage/(\d+)|', $this->getUrl(), $match);
-      $id = isset($match[1]) ? $match[1] : NULL;
+      $id = $match[1] ?? NULL;
       $this->assertSession()->pageTextContains("entity_test $id has been created.");
       $this->assertSession()->responseContains('2012-12-30');
       $this->assertSession()->responseContains($start_time_value);
@@ -174,7 +174,7 @@ class DateTimeDayFieldTest extends DateTestBase {
       $this->submitForm($edit, 'Save');
       $match = [];
       preg_match('|entity_test/manage/(\d+)|', $this->getUrl(), $match);
-      $id = isset($match[1]) ? $match[1] : NULL;
+      $id = $match[1] ?? NULL;
       $this->assertSession()->pageTextContains("entity_test $id has been created.");
       $this->assertSession()->responseContains('2012-12-30');
       $this->assertSession()->responseContains($start_time_value);
