@@ -35,20 +35,6 @@ class DateTimeDayItem extends DateTimeItem {
   const DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT = 'H:i:s';
 
   /**
-   * The start time value.
-   *
-   * @var \Drupal\Core\Datetime\DrupalDateTime|null
-   */
-  protected $start_time;
-
-  /**
-   * The end time value.
-   *
-   * @var \Drupal\Core\Datetime\DrupalDateTime|null
-   */
-  protected $end_time;
-
-  /**
    * {@inheritdoc}
    */
   public static function defaultStorageSettings() {
@@ -174,9 +160,11 @@ class DateTimeDayItem extends DateTimeItem {
   public function onChange($property_name, $notify = TRUE) {
     // Enforce that the computed date is recalculated.
     if ($property_name == 'start_time_value') {
+      // @phpstan-ignore-next-line
       $this->start_time = NULL;
     }
     elseif ($property_name == 'end_time_value') {
+      // @phpstan-ignore-next-line
       $this->end_time = NULL;
     }
     parent::onChange($property_name, $notify);
