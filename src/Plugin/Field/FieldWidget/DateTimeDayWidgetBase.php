@@ -35,19 +35,20 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
     $element['end_time_value'] = [
       '#title' => $this->t('End time'),
     ] + $element['value'];
-    if ($items[$delta]->date) {
+    /** @var \Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem $items[$delta] */
+    if (!empty($items[$delta]->date)) {
       /** @var \Drupal\Core\Datetime\DrupalDateTime $value */
       $value = $items[$delta]->date;
       $element['value']['#default_value'] = $this->createDateTimeDayDefaultValue($value, $element['value']['#date_timezone']);
     }
 
-    if ($items[$delta]->start_time) {
+    if (!empty($items[$delta]->start_time)) {
       /** @var \Drupal\Core\Datetime\DrupalDateTime $start_time */
       $start_time = $items[$delta]->start_time;
       $element['start_time_value']['#default_value'] = $this->createDateTimeDayDefaultValue($start_time, $element['start_time_value']['#date_timezone']);
     }
 
-    if ($items[$delta]->end_time) {
+    if (!empty($items[$delta]->end_time)) {
       /** @var \Drupal\Core\Datetime\DrupalDateTime $end_time */
       $end_time = $items[$delta]->end_time;
       $element['end_time_value']['#default_value'] = $this->createDateTimeDayDefaultValue($end_time, $element['end_time_value']['#date_timezone']);

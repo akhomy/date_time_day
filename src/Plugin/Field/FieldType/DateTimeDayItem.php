@@ -55,23 +55,23 @@ class DateTimeDayItem extends DateTimeItem {
     $date->setClass(DateDayComputed::class);
 
     $properties['start_time_value'] = DataDefinition::create('string')
-      ->setLabel(t('Start time value'))
+      ->setLabel((string) t('Start time value'))
       ->setRequired(TRUE);
 
     $properties['start_time'] = DataDefinition::create('any')
-      ->setLabel(t('Computed start time'))
-      ->setDescription(t('The computed start DateTime object.'))
+      ->setLabel((string) t('Computed start time'))
+      ->setDescription((string) t('The computed start DateTime object.'))
       ->setComputed(TRUE)
       ->setClass(DateTimeDayComputed::class)
       ->setSetting('date source', 'start_time_value');
 
     $properties['end_time_value'] = DataDefinition::create('string')
-      ->setLabel(t('End time value'))
+      ->setLabel((string) t('End time value'))
       ->setRequired(TRUE);
 
     $properties['end_time'] = DataDefinition::create('any')
-      ->setLabel(t('Computed end time'))
-      ->setDescription(t('The computed end DateTime object.'))
+      ->setLabel((string) t('Computed end time'))
+      ->setDescription((string) t('The computed end DateTime object.'))
       ->setComputed(TRUE)
       ->setClass(DateTimeDayComputed::class)
       ->setSetting('date source', 'end_time_value');

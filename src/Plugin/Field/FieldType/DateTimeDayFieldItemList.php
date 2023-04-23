@@ -89,7 +89,7 @@ class DateTimeDayFieldItemList extends DateTimeFieldItemList {
         'default_date',
       ]));
       if (!$is_strtotime) {
-        $form_state->setErrorByName('default_value_input][default_date', $this->t('The relative default date value entered is invalid.'));
+        $form_state->setErrorByName('default_value_input][default_date', (string) $this->t('The relative default date value entered is invalid.'));
       }
     }
 
@@ -104,7 +104,7 @@ class DateTimeDayFieldItemList extends DateTimeFieldItemList {
         'default_start_time',
       ]));
       if (!$is_strtotime) {
-        $form_state->setErrorByName('default_value_input][default_start_time', $this->t('The relative default start time value entered is invalid.'));
+        $form_state->setErrorByName('default_value_input][default_start_time', (string) $this->t('The relative default start time value entered is invalid.'));
       }
     }
 
@@ -114,7 +114,7 @@ class DateTimeDayFieldItemList extends DateTimeFieldItemList {
         'default_end_time',
       ]));
       if (!$is_strtotime) {
-        $form_state->setErrorByName('default_value_input][default_end_time', $this->t('The relative default end time value entered is invalid.'));
+        $form_state->setErrorByName('default_value_input][default_end_time', (string) $this->t('The relative default end time value entered is invalid.'));
       }
     }
   }
