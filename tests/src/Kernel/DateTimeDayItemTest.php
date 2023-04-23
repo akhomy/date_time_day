@@ -34,7 +34,7 @@ class DateTimeDayItemTest extends FieldKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'datetime',
     'date_time_day',
   ];
@@ -42,7 +42,7 @@ class DateTimeDayItemTest extends FieldKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Add a date_time_day field.

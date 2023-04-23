@@ -25,7 +25,7 @@ class DateTimeDayFieldTest extends DateTestBase {
    *
    * @var array
    */
-  public static $modules = ['date_time_day'];
+  protected static $modules = ['date_time_day'];
 
   /**
    * An array of timezone extremes to test.
@@ -82,9 +82,9 @@ class DateTimeDayFieldTest extends DateTestBase {
         ->save();
       // Display creation form.
       $this->drupalGet('entity_test/add');
-      $this->assertFieldByName("{$field_name}[0][value][date]", '', 'Date element found.');
-      $this->assertFieldByName("{$field_name}[0][start_time_value]", '', 'Start time element found.');
-      $this->assertFieldByName("{$field_name}[0][end_time_value]", '', 'End time element found.');
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][value][date]", '');
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][start_time_value]", '');
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][end_time_value]", '');
       $this->assertFieldByXPath('//*[@id="edit-' . $field_name . '-wrapper"]//label[contains(@class, "js-form-required")]', TRUE, 'Required markup found');
       $this->assertFieldByXPath('//fieldset[@id="edit-' . $field_name . '-0"]/legend', $field_label, 'Fieldset and label found');
       $this->assertFieldByXPath('//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]', NULL, 'ARIA described-by found');
@@ -102,28 +102,28 @@ class DateTimeDayFieldTest extends DateTestBase {
         "{$field_name}[0][start_time_value]" => $start_time_value,
         "{$field_name}[0][end_time_value]" => $end_time_value,
       ];
-      $this->drupalPostForm(NULL, $edit, t('Save'));
+      $this->submitForm($edit, t('Save'));
       preg_match('|entity_test/manage/(\d+)|', $this->getUrl(), $match);
       $id = $match[1];
       $this->assertSession()->pageTextContains("entity_test $id has been created.");
-      $this->assertRaw('2012-12-30');
-      $this->assertRaw($start_time_value);
-      $this->assertRaw($end_time_value);
+      $this->assertSession()->responseContains('2012-12-30');
+      $this->assertSession()->responseContains($start_time_value);
+      $this->assertSession()->responseContains($end_time_value);
       // Verify the date doesn't change when entity is edited through the form.
       $entity = EntityTest::load($id);
-      $this->assertEqual('2012-12-30', $entity->{$field_name}->value);
-      $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
-      $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
+      $this->assertEquals('2012-12-30', $entity->{$field_name}->value);
+      $this->assertEquals($start_time_value, $entity->{$field_name}->start_time_value);
+      $this->assertEquals($end_time_value, $entity->{$field_name}->end_time_value);
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], t('Save'));
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], t('Save'));
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], t('Save'));
       $entity = EntityTest::load($id);
-      $this->assertEqual('2012-12-30', $entity->{$field_name}->value);
-      $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
-      $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
+      $this->assertEquals('2012-12-30', $entity->{$field_name}->value);
+      $this->assertEquals($start_time_value, $entity->{$field_name}->start_time_value);
+      $this->assertEquals($end_time_value, $entity->{$field_name}->end_time_value);
     }
   }
 
@@ -149,9 +149,9 @@ class DateTimeDayFieldTest extends DateTestBase {
       $this->fieldStorage->save();
       // Display creation form.
       $this->drupalGet('entity_test/add');
-      $this->assertFieldByName("{$field_name}[0][value][date]", '', 'Date element found.');
-      $this->assertFieldByName("{$field_name}[0][start_time_value][time]", '', 'Start time element found.');
-      $this->assertFieldByName("{$field_name}[0][end_time_value][time]", '', 'End time element found.');
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][value][date]", '');
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][start_time_value][time]", '');
+      $this->assertSession()->fieldValueEquals("{$field_name}[0][end_time_value][time]", '');
       $this->assertFieldByXPath('//*[@id="edit-' . $field_name . '-wrapper"]//label[contains(@class, "js-form-required")]', TRUE, 'Required markup found');
       $this->assertFieldByXPath('//fieldset[@id="edit-' . $field_name . '-0"]/legend', $field_label, 'Fieldset and label found');
       $this->assertFieldByXPath('//fieldset[@aria-describedby="edit-' . $field_name . '-0--description"]', NULL, 'ARIA described-by found');
@@ -169,28 +169,28 @@ class DateTimeDayFieldTest extends DateTestBase {
         "{$field_name}[0][start_time_value][time]" => $start_time_value,
         "{$field_name}[0][end_time_value][time]" => $end_time_value,
       ];
-      $this->drupalPostForm(NULL, $edit, t('Save'));
+      $this->submitForm($edit, t('Save'));
       preg_match('|entity_test/manage/(\d+)|', $this->getUrl(), $match);
       $id = $match[1];
       $this->assertSession()->pageTextContains("entity_test $id has been created.");
-      $this->assertRaw('2012-12-30');
-      $this->assertRaw($start_time_value);
-      $this->assertRaw($end_time_value);
+      $this->assertSession()->responseContains('2012-12-30');
+      $this->assertSession()->responseContains($start_time_value);
+      $this->assertSession()->responseContains($end_time_value);
       // Verify the date doesn't change when entity is edited through the form.
       $entity = EntityTest::load($id);
-      $this->assertEqual('2012-12-30', $entity->{$field_name}->value);
-      $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
-      $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
+      $this->assertEquals('2012-12-30', $entity->{$field_name}->value);
+      $this->assertEquals($start_time_value, $entity->{$field_name}->start_time_value);
+      $this->assertEquals($end_time_value, $entity->{$field_name}->end_time_value);
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], t('Save'));
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], t('Save'));
       $this->drupalGet('entity_test/manage/' . $id . '/edit');
-      $this->drupalPostForm(NULL, [], t('Save'));
+      $this->submitForm([], t('Save'));
       $entity = EntityTest::load($id);
-      $this->assertEqual('2012-12-30', $entity->{$field_name}->value);
-      $this->assertEqual($start_time_value, $entity->{$field_name}->start_time_value);
-      $this->assertEqual($end_time_value, $entity->{$field_name}->end_time_value);
+      $this->assertEquals('2012-12-30', $entity->{$field_name}->value);
+      $this->assertEquals($start_time_value, $entity->{$field_name}->start_time_value);
+      $this->assertEquals($end_time_value, $entity->{$field_name}->end_time_value);
     }
   }
 
@@ -235,10 +235,11 @@ class DateTimeDayFieldTest extends DateTestBase {
       $field_name . '[0][start_time_value]' => '10:00',
       $field_name . '[0][end_time_value]' => '19:00',
     ];
-    $this->drupalPostForm('node/add/date_content', $edit, t('Save'));
+    $this->drupalGet('node/add/date_content');
+    $this->submitForm($edit, t('Save'));
     $this->drupalGet('admin/structure/types/manage/date_content/fields/node.date_content.' . $field_name . '/storage');
     $result = $this->xpath("//*[@id='edit-settings-datetime-type' and contains(@disabled, 'disabled')]");
-    $this->assertEqual(count($result), 1, "Changing datetime setting is disabled.");
+    $this->assertEquals(count($result), 1, "Changing datetime setting is disabled.");
     $this->assertSession()->pageTextContains('There is data for this field in the database. The field settings can no longer be changed.');
   }
 

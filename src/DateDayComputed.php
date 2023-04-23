@@ -43,7 +43,7 @@ class DateDayComputed extends TypedData {
 
     /** @var \Drupal\Core\Field\FieldItemInterface $item */
     $item = $this->getParent();
-    $value = $item->{($this->definition->getSetting('date source'))};
+    $value = $item->{($this->definition->getSetting('date source'))} ?? '';
 
     // A date cannot be created from a NULL value.
     if (empty($value) || !is_string($value)) {
