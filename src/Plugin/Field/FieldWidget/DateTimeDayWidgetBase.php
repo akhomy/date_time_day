@@ -169,7 +169,7 @@ class DateTimeDayWidgetBase extends DateTimeWidgetBase {
       if ($start_date->getTimestamp() !== $end_date->getTimestamp()) {
         $interval = $start_date->diff($end_date);
         if ($interval->invert === 1) {
-          $form_state->setError($element, $this->t('The @title end date cannot be before the start date', ['@title' => $element['#title']]));
+          $form_state->setError($element, (string) $this->t('The @title end date cannot be before the start date', ['@title' => $element['#title']]));
         }
       }
     }

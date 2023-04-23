@@ -35,6 +35,20 @@ class DateTimeDayItem extends DateTimeItem {
   const DATE_TIME_DAY_H_I_S_FORMAT_STORAGE_FORMAT = 'H:i:s';
 
   /**
+   * The start time value.
+   *
+   * @var \Drupal\Core\Datetime\DrupalDateTime|null
+   */
+  protected $start_time;
+
+  /**
+   * The end time value.
+   *
+   * @var \Drupal\Core\Datetime\DrupalDateTime|null
+   */
+  protected $end_time;
+
+  /**
    * {@inheritdoc}
    */
   public static function defaultStorageSettings() {
