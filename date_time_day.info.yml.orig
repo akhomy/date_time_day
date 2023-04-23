@@ -2,6 +2,7 @@ name: 'Date time day'
 type: module
 description: 'Provides the ability to store date (start, end) time of single day.'
 package: Field types
-core_version_requirement: ^8 || ^9 || ^10
+core: 8.x
+core_version_requirement: ^8 || ^9
 dependencies:
   - drupal:datetime
