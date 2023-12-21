@@ -23,16 +23,12 @@ class DateTimeDayFieldTest extends DateTestBase {
   use StringTranslationTrait;
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = ['date_time_day'];
 
   /**
-   * An array of timezone extremes to test.
-   *
-   * @var string[]
+   * {@inheritdoc}
    */
   protected static $timezones = [
     // UTC.
@@ -41,10 +37,8 @@ class DateTimeDayFieldTest extends DateTestBase {
 
   /**
    * The default display settings to use for the formatters.
-   *
-   * @var array
    */
-  protected $defaultSettings = [
+  protected array $defaultSettings = [
     'timezone_override' => '',
     'day_separator' => ',',
     'time_separator' => '-',
@@ -58,7 +52,7 @@ class DateTimeDayFieldTest extends DateTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function getTestFieldType() {
+  protected function getTestFieldType(): string {
     return 'datetimeday';
   }
 

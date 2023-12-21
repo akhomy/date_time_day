@@ -21,10 +21,8 @@ class DateTimeDayComputed extends TypedData {
 
   /**
    * Cached computed date.
-   *
-   * @var \Drupal\Core\Datetime\DrupalDateTime|null
    */
-  protected $date = NULL;
+  protected ?DrupalDateTime $date = NULL;
 
   /**
    * {@inheritdoc}
@@ -39,7 +37,7 @@ class DateTimeDayComputed extends TypedData {
   /**
    * {@inheritdoc}
    */
-  public function getValue(string $langcode = NULL) {
+  public function getValue(?string $langcode = NULL) {
     if ($this->date !== NULL) {
       return $this->date;
     }

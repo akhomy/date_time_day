@@ -21,17 +21,13 @@ class DateTimeDayItemTest extends FieldKernelTestBase {
 
   /**
    * A field storage to use in this test class.
-   *
-   * @var \Drupal\field\Entity\FieldStorageConfig
    */
-  protected $fieldStorage;
+  protected FieldStorageConfig $fieldStorage;
 
   /**
    * The field used in this test class.
-   *
-   * @var \Drupal\field\Entity\FieldConfig
    */
-  protected $field;
+  protected FieldConfig $field;
 
   /**
    * {@inheritdoc}
