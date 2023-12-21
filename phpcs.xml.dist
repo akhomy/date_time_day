@@ -3,7 +3,10 @@
   <description>PHP CodeSniffer configuration for date_time_day.</description>
   <arg name="extensions" value="inc,install,module,php,profile,test,theme,yml"/>
 
-  <rule ref="vendor/drupal/coder/coder_sniffer/Drupal"/>
+  <rule ref="vendor/drupal/coder/coder_sniffer/Drupal">
+    <!-- We use native class property type hints now, so @var comments are not needed anymore. -->
+    <exclude name="Drupal.Commenting.VariableComment.MissingVar"/>
+  </rule>
   <rule ref="vendor/drupal/coder/coder_sniffer/DrupalPractice"/>
   <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints">
     <!-- Ignore checking if declare statement is directly after php tag as this conflicts with Drupal rules -->
