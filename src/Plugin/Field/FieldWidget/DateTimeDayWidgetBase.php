@@ -7,9 +7,9 @@ namespace Drupal\date_time_day\Plugin\Field\FieldWidget;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\datetime\Plugin\Field\FieldWidget\DateTimeWidgetBase;
-use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
 
 /**
  * Base class for the 'datetimeday_*' widgets.

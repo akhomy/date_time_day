@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace Drupal\date_time_day;
 
-use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\TypedData\DataDefinitionInterface;
-use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\Core\TypedData\TypedData;
+use Drupal\Core\TypedData\TypedDataInterface;
+use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
 /**

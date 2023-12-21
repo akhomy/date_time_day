@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace Drupal\date_time_day\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\datetime\Plugin\Field\FieldFormatter\DateTimeDefaultFormatter;
-use Drupal\date_time_day\DateTimeDayTrait;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\date_time_day\DateTimeDayTrait;
+use Drupal\datetime\Plugin\Field\FieldFormatter\DateTimeDefaultFormatter;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
 
 /**

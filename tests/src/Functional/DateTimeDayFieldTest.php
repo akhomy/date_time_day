@@ -4,14 +4,14 @@ declare (strict_types = 1);
 
 namespace Drupal\Tests\date_time_day\Functional;
 
-use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
-use Drupal\Tests\datetime\Functional\DateTestBase;
-use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Datetime\Entity\DateFormat;
-use Drupal\entity_test\Entity\EntityTest;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\date_time_day\Plugin\Field\FieldType\DateTimeDayItem;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItem;
+use Drupal\entity_test\Entity\EntityTest;
+use Drupal\Tests\datetime\Functional\DateTestBase;
 
 /**
  * Tests date_time_day field functionality.
