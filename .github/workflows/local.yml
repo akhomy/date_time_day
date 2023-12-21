@@ -75,7 +75,7 @@ jobs:
           cd coder
           composer init --name=coder/coder --no-interaction
           composer config allow-plugins true -n
-          composer require drupal/coder:8.3.15 --no-interaction --no-progress
+          composer require drupal/coder:8.3.22 --no-interaction --no-progress
 
       # There are issues with the act to include checkout inside checkout.
       - name: Sets composer github token
