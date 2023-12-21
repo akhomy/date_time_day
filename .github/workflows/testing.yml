@@ -128,4 +128,4 @@ jobs:
 
       - name: Run PHPCS
         run: |
-          ./coder/vendor/bin/phpcs --standard=Drupal,DrupalPractice -p modules/contrib/date_time_day
+          ./coder/vendor/bin/phpcs --standard=modules/contrib/date_time_day/phpcs.xml.dist -p modules/contrib/date_time_day
